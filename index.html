@@ -38,29 +38,13 @@
   }
   *{box-sizing:border-box;}
   html,body{height:100%;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text-primary);
-    font-family:'Inter', system-ui, sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{ margin:0; background:var(--bg); color:var(--text-primary); font-family:'Inter', system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
   .mono{font-family:'JetBrains Mono', monospace;}
   ::selection{background:var(--primary-light); color:#fff;}
 
-  button{
-    font-family:inherit;
-    cursor:pointer;
-    border:none;
-    font-weight:600;
-    letter-spacing:0.1px;
-  }
+  button{ font-family:inherit; cursor:pointer; border:none; font-weight:600; letter-spacing:0.1px; }
   button:disabled{opacity:0.5; cursor:not-allowed;}
-  .btn{
-    display:inline-flex; align-items:center; gap:8px;
-    padding:10px 18px; border-radius:12px; font-size:14px;
-    transition:transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-  }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:12px; font-size:14px; transition:transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease; }
   .btn svg{width:16px; height:16px; flex-shrink:0;}
   .btn-primary{ background:var(--gradient-primary); color:#fff; box-shadow:0 4px 14px rgba(79,70,229,0.35); }
   .btn-primary:hover:not(:disabled){ transform:translateY(-1px); box-shadow:0 6px 18px rgba(79,70,229,0.42); }
@@ -71,35 +55,17 @@
   .btn-danger{ background:transparent; color:var(--error); }
   .btn-danger:hover:not(:disabled){ background:#FEF2F2; }
   .btn-sm{ padding:7px 12px; font-size:13px; border-radius:9px; }
-  .icon-btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:38px; height:38px; border-radius:11px; background:rgba(255,255,255,0.16); color:#fff;
-  }
+  .icon-btn{ display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:11px; background:rgba(255,255,255,0.16); color:#fff; }
   .icon-btn:hover{ background:rgba(255,255,255,0.26); }
   .icon-btn svg{width:19px; height:19px;}
 
-  input[type=text], input[type=password]{
-    width:100%; padding:11px 13px; border-radius:11px; border:1.5px solid var(--divider);
-    background:var(--input-bg); font-size:14px; color:var(--text-primary); font-family:inherit;
-  }
+  input[type=text], input[type=password]{ width:100%; padding:11px 13px; border-radius:11px; border:1.5px solid var(--divider); background:var(--input-bg); font-size:14px; color:var(--text-primary); font-family:inherit; }
   input:focus{ outline:none; border-color:var(--primary); background:#fff; box-shadow:0 0 0 4px var(--primary-container); }
   label{ display:block; font-size:12.5px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; }
 
-  /* ---------- Auth / connect screen ---------- */
-  #authScreen{
-    min-height:100vh; display:flex; align-items:center; justify-content:center;
-    background:var(--gradient-primary); padding:24px;
-  }
-  #authScreen::before{ content:''; }
-  .auth-card{
-    width:100%; max-width:440px; background:#fff; border-radius:24px; padding:36px 34px;
-    box-shadow:var(--shadow-lg);
-  }
-  .auth-logo{
-    width:56px; height:56px; border-radius:16px; background:var(--gradient-card);
-    display:flex; align-items:center; justify-content:center; margin-bottom:18px;
-    box-shadow:0 6px 16px rgba(79,70,229,0.3);
-  }
+  #authScreen{ min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--gradient-primary); padding:24px; }
+  .auth-card{ width:100%; max-width:440px; background:#fff; border-radius:24px; padding:36px 34px; box-shadow:var(--shadow-lg); }
+  .auth-logo{ width:56px; height:56px; border-radius:16px; background:var(--gradient-card); display:flex; align-items:center; justify-content:center; margin-bottom:18px; box-shadow:0 6px 16px rgba(79,70,229,0.3); }
   .auth-logo svg{width:28px; height:28px; color:#fff;}
   .auth-card h1{ font-size:21px; margin:0 0 4px; font-weight:800; letter-spacing:-0.3px; }
   .auth-card .sub{ color:var(--text-secondary); font-size:13.5px; margin-bottom:26px; }
@@ -107,75 +73,43 @@
   .field-row{ display:flex; gap:10px; }
   .field-row > div{ flex:1; }
   .hint{ font-size:12px; color:var(--text-hint); line-height:1.6; margin-top:10px; }
-  .error-box{
-    margin-top:14px; padding:12px 14px; border-radius:12px;
-    background:#FEF2F2; border:1px solid #FECACA; color:#B91C1C;
-    font-size:12.5px; font-family:'JetBrains Mono', monospace; white-space:pre-wrap; word-break:break-word;
-  }
+  .error-box{ margin-top:14px; padding:12px 14px; border-radius:12px; background:#FEF2F2; border:1px solid #FECACA; color:#B91C1C; font-size:12.5px; font-family:'JetBrains Mono', monospace; white-space:pre-wrap; word-break:break-word; }
 
-  /* ---------- App shell ---------- */
   #appShell{ display:none; min-height:100vh; }
-  .sidebar{
-    width:272px; flex-shrink:0; background:var(--gradient-github); color:#fff;
-    padding:22px 16px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow-y:auto;
-  }
+  .sidebar{ width:272px; flex-shrink:0; background:var(--gradient-github); color:#fff; padding:22px 16px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow-y:auto; }
   .brand{ display:flex; align-items:center; gap:11px; padding:4px 8px 20px; }
-  .brand-badge{
-    width:38px; height:38px; border-radius:11px; background:rgba(255,255,255,0.14);
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  }
+  .brand-badge{ width:38px; height:38px; border-radius:11px; background:rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .brand-badge svg{width:20px; height:20px;}
   .brand-name{ font-weight:800; font-size:15px; letter-spacing:-0.2px; }
   .brand-repo{ font-size:11px; color:#94A3B8; font-family:'JetBrains Mono', monospace; }
 
-  .status-pill{
-    display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:11px;
-    background:rgba(255,255,255,0.08); margin-bottom:18px; font-size:12.5px; color:#CBD5E1;
-  }
+  .status-pill{ display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:11px; background:rgba(255,255,255,0.08); margin-bottom:18px; font-size:12.5px; color:#CBD5E1; }
   .dot{ width:8px; height:8px; border-radius:50%; background:var(--text-hint); flex-shrink:0; }
   .dot.on{ background:var(--secondary-light); box-shadow:0 0 0 3px rgba(45,212,191,0.2); }
 
-  .nav-label{
-    font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#64748B;
-    padding:14px 10px 8px; font-weight:700;
-  }
-  .nav-item{
-    display:flex; align-items:center; justify-content:space-between; gap:8px;
-    padding:10px 12px; border-radius:11px; color:#E2E8F0; font-size:13.5px; font-weight:500;
-    margin-bottom:2px; cursor:pointer; transition:background 0.12s ease;
-  }
+  .nav-label{ font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#64748B; padding:14px 10px 8px; font-weight:700; }
+  .nav-item{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-radius:11px; color:#E2E8F0; font-size:13.5px; font-weight:500; margin-bottom:2px; cursor:pointer; transition:background 0.12s ease; }
   .nav-item:hover{ background:rgba(255,255,255,0.06); }
   .nav-item.active{ background:rgba(255,255,255,0.13); color:#fff; font-weight:700; }
   .nav-item .left{ display:flex; align-items:center; gap:10px; overflow:hidden; }
   .nav-item .name{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .nav-item .count-badge{
-    font-size:10.5px; font-family:'JetBrains Mono', monospace; color:#94A3B8;
-    background:rgba(255,255,255,0.07); padding:2px 7px; border-radius:100px; flex-shrink:0;
-  }
+  .nav-item .count-badge{ font-size:10.5px; font-family:'JetBrains Mono', monospace; color:#94A3B8; background:rgba(255,255,255,0.07); padding:2px 7px; border-radius:100px; flex-shrink:0; }
   .nav-item .del{ opacity:0; background:none; color:#94A3B8; padding:2px 5px; border-radius:6px; font-size:12px; }
   .nav-item:hover .del{ opacity:1; }
   .nav-item .del:hover{ color:#F87171; background:rgba(248,113,113,0.12); }
 
   .add-inline{ display:flex; gap:6px; padding:6px 4px 2px; }
-  .add-inline input{
-    flex:1; padding:8px 10px; border-radius:9px; border:1.5px solid rgba(255,255,255,0.12);
-    background:rgba(255,255,255,0.07); color:#fff; font-size:13px;
-  }
+  .add-inline input{ flex:1; padding:8px 10px; border-radius:9px; border:1.5px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.07); color:#fff; font-size:13px; }
   .add-inline input::placeholder{ color:#64748B; }
   .add-inline input:focus{ outline:none; border-color:var(--primary-light); background:rgba(255,255,255,0.1); box-shadow:none; }
-  .add-inline button{
-    width:34px; flex-shrink:0; border-radius:9px; background:var(--primary); color:#fff; font-size:16px;
-  }
+  .add-inline button{ width:34px; flex-shrink:0; border-radius:9px; background:var(--primary); color:#fff; font-size:16px; }
   .add-inline button:hover{ background:var(--primary-light); }
 
   .sidebar-footer{ margin-top:auto; padding-top:14px; border-top:1px solid rgba(255,255,255,0.08); }
   .sidebar-footer .nav-item{ color:#CBD5E1; }
 
   .main{ flex:1; min-width:0; }
-  .topbar{
-    display:flex; align-items:center; justify-content:space-between; gap:16px;
-    padding:18px 30px; background:#fff; border-bottom:1px solid var(--divider); position:sticky; top:0; z-index:5;
-  }
+  .topbar{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 30px; background:#fff; border-bottom:1px solid var(--divider); position:sticky; top:0; z-index:5; }
   .breadcrumb{ display:flex; align-items:center; gap:6px; font-size:13.5px; flex-wrap:wrap; }
   .breadcrumb .crumb{ color:var(--text-secondary); cursor:pointer; }
   .breadcrumb .crumb:hover{ color:var(--primary); }
@@ -185,142 +119,84 @@
 
   .content{ padding:26px 30px 60px; max-width:1180px; }
 
-  /* Stat cards */
-  .stats-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-bottom:26px; }
-  .stat-card{
-    background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); padding:18px 20px;
-    box-shadow:var(--shadow-sm);
-  }
+  .stats-grid{ display:grid; grid-template-columns:repeat(5, 1fr); gap:14px; margin-bottom:26px; }
+  .stat-card{ background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); padding:16px 18px; box-shadow:var(--shadow-sm); }
   .stat-card .top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
-  .stat-icon{ width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
-  .stat-icon svg{ width:18px; height:18px; }
-  .stat-value{ font-size:26px; font-weight:800; letter-spacing:-0.5px; }
-  .stat-label{ font-size:12.5px; color:var(--text-secondary); font-weight:600; }
+  .stat-icon{ width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
+  .stat-icon svg{ width:17px; height:17px; }
+  .stat-value{ font-size:24px; font-weight:800; letter-spacing:-0.5px; }
+  .stat-label{ font-size:12px; color:var(--text-secondary); font-weight:600; }
 
   .section-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px; }
   .section-head h2{ font-size:18px; font-weight:800; letter-spacing:-0.3px; margin:0; }
   .section-head .desc{ font-size:13px; color:var(--text-secondary); margin-top:2px; }
 
-  /* Card grids (faculty / subject) */
   .card-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:14px; margin-bottom:8px; }
-  .entity-card{
-    background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); padding:18px;
-    cursor:pointer; position:relative; box-shadow:var(--shadow-sm); transition:box-shadow 0.15s ease, transform 0.15s ease;
-  }
+  .entity-card{ background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); padding:18px; cursor:pointer; position:relative; box-shadow:var(--shadow-sm); transition:box-shadow 0.15s ease, transform 0.15s ease; }
   .entity-card:hover{ box-shadow:var(--shadow-md); transform:translateY(-2px); }
-  .entity-card .icon-wrap{
-    width:42px; height:42px; border-radius:12px; background:var(--gradient-card); color:#fff;
-    display:flex; align-items:center; justify-content:center; margin-bottom:12px;
-  }
+  .entity-card .icon-wrap{ width:42px; height:42px; border-radius:12px; background:var(--gradient-card); color:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:12px; }
   .entity-card .icon-wrap svg{ width:20px; height:20px; }
   .entity-card h3{ font-size:15px; font-weight:700; margin:0 0 3px; letter-spacing:-0.1px; }
   .entity-card .meta{ font-size:12px; color:var(--text-secondary); font-family:'JetBrains Mono', monospace; }
   .entity-card .count{ font-size:12px; color:var(--text-hint); margin-top:8px; }
-  .entity-card .del-x{
-    position:absolute; top:12px; right:12px; width:26px; height:26px; border-radius:8px;
-    background:var(--input-bg); color:var(--text-hint); display:flex; align-items:center; justify-content:center;
-    opacity:0; transition:opacity 0.12s ease;
-  }
+  .entity-card .del-x{ position:absolute; top:12px; right:12px; width:26px; height:26px; border-radius:8px; background:var(--input-bg); color:var(--text-hint); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.12s ease; }
   .entity-card:hover .del-x{ opacity:1; }
   .entity-card .del-x:hover{ background:#FEE2E2; color:var(--error); }
   .entity-card .del-x svg{ width:13px; height:13px; }
 
-  .add-card{
-    border:2px dashed var(--border); border-radius:var(--r-md); display:flex; flex-direction:column;
-    align-items:center; justify-content:center; padding:18px; color:var(--text-secondary); cursor:pointer;
-    background:transparent; min-height:118px;
-  }
+  .add-card{ border:2px dashed var(--border); border-radius:var(--r-md); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:18px; color:var(--text-secondary); cursor:pointer; background:transparent; min-height:118px; }
   .add-card:hover{ border-color:var(--primary-light); color:var(--primary); background:var(--primary-container); }
   .add-card svg{ width:22px; height:22px; margin-bottom:6px; }
   .add-card span{ font-size:13px; font-weight:600; }
 
-  /* Year chips */
   .chip-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:22px; }
-  .chip{
-    display:flex; align-items:center; gap:8px; padding:9px 16px; border-radius:100px;
-    background:#fff; border:1.5px solid var(--divider); font-size:13.5px; font-weight:600; cursor:pointer;
-    color:var(--text-secondary);
-  }
+  .chip{ display:flex; align-items:center; gap:8px; padding:9px 16px; border-radius:100px; background:#fff; border:1.5px solid var(--divider); font-size:13.5px; font-weight:600; cursor:pointer; color:var(--text-secondary); }
   .chip:hover{ border-color:var(--primary-light); color:var(--primary); }
   .chip.active{ background:var(--gradient-card); border-color:transparent; color:#fff; box-shadow:0 3px 10px rgba(79,70,229,0.28); }
   .chip .del{ opacity:0.6; }
   .chip .del:hover{ opacity:1; }
-  .chip-add{
-    padding:9px 14px; border-radius:100px; border:1.5px dashed var(--border); background:transparent;
-    color:var(--text-secondary); font-size:13.5px; font-weight:600;
-  }
+  .chip-add{ padding:9px 14px; border-radius:100px; border:1.5px dashed var(--border); background:transparent; color:var(--text-secondary); font-size:13.5px; font-weight:600; }
   .chip-add:hover{ border-color:var(--primary-light); color:var(--primary); }
 
-  /* Papers list */
-  .paper-row{
-    display:flex; align-items:center; justify-content:space-between; gap:14px;
-    background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); padding:14px 16px; margin-bottom:10px;
-  }
+  .paper-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); padding:14px 16px; margin-bottom:10px; }
   .paper-row .left{ display:flex; align-items:center; gap:13px; min-width:0; }
-  .pdf-icon{
-    width:40px; height:40px; border-radius:10px; background:#FEF2F2; color:var(--error);
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  }
+  .pdf-icon{ width:40px; height:40px; border-radius:10px; background:#FEF2F2; color:var(--error); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .pdf-icon svg{ width:19px; height:19px; }
   .paper-row .name{ font-weight:700; font-size:14px; color:var(--text-primary); text-decoration:none; }
   .paper-row .name:hover{ color:var(--primary); }
-  .paper-row .path{ font-size:11.5px; color:var(--text-hint); font-family:'JetBrains Mono', monospace; margin-top:2px;
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:420px; }
+  .paper-row .path{ font-size:11.5px; color:var(--text-hint); font-family:'JetBrains Mono', monospace; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:420px; }
 
-  .empty-state{
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:50px 20px; color:var(--text-secondary); text-align:center;
-  }
+  .empty-state{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding:50px 20px; color:var(--text-secondary); text-align:center; }
   .empty-state svg{ width:44px; height:44px; color:var(--text-hint); margin-bottom:14px; }
   .empty-state .title{ font-weight:700; color:var(--text-primary); margin-bottom:4px; font-size:14.5px; }
   .empty-state .sub{ font-size:13px; }
 
-  /* Upload dropzone */
   .upload-card{ background:#fff; border:1px solid var(--divider); border-radius:var(--r-lg); padding:22px; margin-bottom:24px; }
   .upload-card h3{ margin:0 0 14px; font-size:15px; font-weight:800; display:flex; align-items:center; gap:8px; }
-  .dropzone{
-    border:2px dashed var(--border); border-radius:var(--r-md); padding:28px 20px; text-align:center;
-    background:var(--input-bg); cursor:pointer; transition:all 0.15s ease; position:relative;
-  }
+  .dropzone{ border:2px dashed var(--border); border-radius:var(--r-md); padding:28px 20px; text-align:center; background:var(--input-bg); cursor:pointer; transition:all 0.15s ease; position:relative; }
   .dropzone.drag{ border-color:var(--primary); background:var(--primary-container); }
   .dropzone.has-file{ border-style:solid; border-color:var(--secondary-light); background:#F0FDFA; }
   .dropzone svg{ width:30px; height:30px; color:var(--text-hint); margin-bottom:10px; }
   .dropzone .dz-title{ font-weight:700; font-size:14px; color:var(--text-primary); }
   .dropzone .dz-sub{ font-size:12.5px; color:var(--text-secondary); margin-top:4px; }
   .dropzone input[type=file]{ position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
-  .file-chip{
-    display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--divider);
-    padding:8px 12px; border-radius:10px; font-size:13px; font-weight:600; margin-top:4px;
-  }
-  .file-chip .x{ color:var(--text-hint); }
-  .file-chip .x:hover{ color:var(--error); }
 
   .progress-track{ height:8px; border-radius:100px; background:var(--input-bg); overflow:hidden; margin-top:14px; display:none; }
   .progress-fill{ height:100%; width:0%; background:var(--gradient-card); transition:width 0.15s ease; }
 
-  /* Modal */
-  .modal-overlay{
-    position:fixed; inset:0; background:rgba(15,23,42,0.55); display:none;
-    align-items:center; justify-content:center; z-index:50; padding:20px;
-  }
+  .modal-overlay{ position:fixed; inset:0; background:rgba(15,23,42,0.55); display:none; align-items:center; justify-content:center; z-index:50; padding:20px; }
   .modal-overlay.show{ display:flex; }
   .modal{ background:#fff; border-radius:20px; padding:26px 26px 22px; width:100%; max-width:400px; box-shadow:var(--shadow-lg); }
   .modal h3{ margin:0 0 16px; font-size:16.5px; font-weight:800; }
   .modal .actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
 
-  /* Toasts */
   #toastContainer{ position:fixed; bottom:22px; right:22px; z-index:80; display:flex; flex-direction:column; gap:10px; max-width:360px; }
-  .toast{
-    background:#0F172A; color:#fff; padding:13px 16px; border-radius:12px; font-size:13.5px;
-    display:flex; align-items:flex-start; gap:10px; box-shadow:var(--shadow-lg);
-    animation:toastIn 0.2s ease;
-  }
+  .toast{ background:#0F172A; color:#fff; padding:13px 16px; border-radius:12px; font-size:13.5px; display:flex; align-items:flex-start; gap:10px; box-shadow:var(--shadow-lg); animation:toastIn 0.2s ease; }
   .toast.ok{ background:#065F46; }
   .toast.err{ background:#7F1D1D; }
   .toast svg{ width:17px; height:17px; flex-shrink:0; margin-top:1px; }
   @keyframes toastIn{ from{ opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
 
-  /* Activity log (collapsible, always present) */
   .log-panel{ background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); overflow:hidden; }
   .log-head{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; cursor:pointer; }
   .log-head h3{ margin:0; font-size:13.5px; font-weight:700; color:var(--text-secondary); }
@@ -343,14 +219,13 @@
 
 <div id="toastContainer"></div>
 
-<!-- ============ AUTH / CONNECT SCREEN ============ -->
 <div id="authScreen">
   <div class="auth-card">
     <div class="auth-logo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M20 21H4"/></svg>
     </div>
     <h1>Paper Archive Admin</h1>
-    <div class="sub">Connect your GitHub repo to manage faculties, years, subjects and question paper PDFs.</div>
+    <div class="sub">Connect your GitHub repo to manage faculties, years, semesters, subjects and paper PDFs.</div>
 
     <div class="field-row" style="margin-bottom:14px;">
       <div class="field-group" style="margin-bottom:0;">
@@ -379,7 +254,6 @@
   </div>
 </div>
 
-<!-- ============ APP SHELL ============ -->
 <div id="appShell" style="display:flex;">
 
   <aside class="sidebar">
@@ -444,7 +318,7 @@
       </div>
     </div>
 
-    <div class="content" id="content"><!-- rendered by renderView() --></div>
+    <div class="content" id="content"></div>
 
     <div style="padding:0 30px 40px;">
       <div class="log-panel">
@@ -458,14 +332,10 @@
   </div>
 </div>
 
-<!-- ============ MODALS ============ -->
 <div class="modal-overlay" id="yearModal">
   <div class="modal">
     <h3>Add a year</h3>
-    <div class="field-group">
-      <label>Year</label>
-      <input type="text" id="modalYearInput" placeholder="e.g. 2024">
-    </div>
+    <div class="field-group"><label>Year</label><input type="text" id="modalYearInput" placeholder="e.g. 2024"></div>
     <div class="actions">
       <button class="btn btn-ghost btn-sm" onclick="closeModal('yearModal')">Cancel</button>
       <button class="btn btn-primary btn-sm" onclick="submitYearModal()">Add year</button>
@@ -473,17 +343,22 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="semesterModal">
+  <div class="modal">
+    <h3>Add a semester</h3>
+    <div class="field-group"><label>Semester</label><input type="text" id="modalSemesterInput" placeholder="e.g. Semester 1"></div>
+    <div class="actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('semesterModal')">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="submitSemesterModal()">Add semester</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="subjectModal">
   <div class="modal">
     <h3>Add a subject</h3>
-    <div class="field-group">
-      <label>Subject name</label>
-      <input type="text" id="modalSubjectName" placeholder="e.g. Java Programming">
-    </div>
-    <div class="field-group">
-      <label>Subject code</label>
-      <input type="text" id="modalSubjectCode" placeholder="e.g. CS301">
-    </div>
+    <div class="field-group"><label>Subject name</label><input type="text" id="modalSubjectName" placeholder="e.g. Java Programming"></div>
+    <div class="field-group"><label>Subject code</label><input type="text" id="modalSubjectCode" placeholder="e.g. CS301"></div>
     <div class="actions">
       <button class="btn btn-ghost btn-sm" onclick="closeModal('subjectModal')">Cancel</button>
       <button class="btn btn-primary btn-sm" onclick="submitSubjectModal()">Add subject</button>
@@ -493,7 +368,9 @@
 
 <script>
 /* ---------------------------------------------------------------
-   Data model stored at /data.json in the repo root:
+   Data model stored at /data.json in the repo root — mirrors the
+   Faculty -> Year -> Semester -> Subject -> Paper hierarchy used by
+   FacultyProvider / DataService / PaperScreen in the Flutter app:
 
    {
      "faculties": [
@@ -503,14 +380,25 @@
          "years": [
            {
              "year": "2024",
-             "subjects": [
+             "semesters": [
                {
-                 "name": "Java Programming",
-                 "code": "CS301",
-                 "papers": [
-                   { "name": "Winter 2024 Regular",
-                     "url": "https://raw.githubusercontent.com/.../paper.pdf",
-                     "path": "papers/engineering/2024/CS301/winter-2024-regular-171234.pdf" }
+                 "semester": "Semester 1",
+                 "subjects": [
+                   {
+                     "id": "engineering-2024-sem1-cs301",
+                     "name": "Java Programming",
+                     "code": "CS301",
+                     "papers": [
+                       {
+                         "id": "engineering-2024-sem1-cs301-winter-2024",
+                         "year": "2024",
+                         "fileName": "winter-2024-regular.pdf",
+                         "fileSize": "2.3 MB",
+                         "url": "https://raw.githubusercontent.com/.../paper.pdf",
+                         "path": "papers/engineering/2024/semester-1/CS301/winter-2024-regular-171234.pdf"
+                       }
+                     ]
+                   }
                  ]
                }
              ]
@@ -520,19 +408,19 @@
      ]
    }
 
-   This mirrors the Faculty -> Year -> Subject -> Paper drill-down in the
-   Flutter app (FacultyScreen -> YearScreen -> ... -> PaperScreen). If your
-   subject_model.dart / data_service.dart use different field names, tell
-   me and I'll line this up exactly.
+   Field names for Paper (id, year, fileName, fileSize) are inferred from
+   how paper_screen.dart / manage_papers_screen.dart use them. I don't yet
+   have paper_model.dart / faculty_model.dart / subject_model.dart — once
+   you share those I'll line this up exactly instead of guessing.
 ------------------------------------------------------------------ */
 
 const state = {
   owner:'', repo:'', branch:'', token:'',
   data:null, dataSha:null,
-  currentFacultyId:null, currentYear:null, currentSubjectCode:null,
+  currentFacultyId:null, currentYear:null, currentSemester:null, currentSubjectCode:null,
 };
 
-// ---------- Toasts + log (both fire together, so nothing is ever hidden) ----------
+// ---------- Toasts + log ----------
 
 function toast(message, type='info'){
   const box = document.getElementById('toastContainer');
@@ -547,7 +435,6 @@ function toast(message, type='info'){
   box.appendChild(el);
   setTimeout(() => { el.style.opacity='0'; el.style.transition='opacity 0.25s'; setTimeout(()=>el.remove(), 250); }, type==='err' ? 6000 : 3200);
 }
-
 function log(message, type='info'){
   const body = document.getElementById('logBody');
   const line = document.createElement('div');
@@ -557,7 +444,6 @@ function log(message, type='info'){
   body.scrollTop = body.scrollHeight;
   if (type === 'err') toast(message, 'err');
 }
-
 function toggleLog(){
   document.getElementById('logBody').classList.toggle('open');
   document.getElementById('logChevron').style.transform =
@@ -566,12 +452,14 @@ function toggleLog(){
 
 // ---------- Helpers ----------
 
-function slugify(s){
-  return (s || '').toString().trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') || 'item';
-}
+function slugify(s){ return (s || '').toString().trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') || 'item'; }
 function utf8ToB64(str){ return btoa(unescape(encodeURIComponent(str))); }
 function b64ToUtf8(str){ return decodeURIComponent(escape(atob(str.replace(/\n/g,'')))); }
 function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function fmtSize(bytes){
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(0) + ' KB';
+  return (bytes/1024/1024).toFixed(2) + ' MB';
+}
 
 async function gh(path, options = {}){
   const base = `https://api.github.com/repos/${state.owner}/${state.repo}`;
@@ -601,7 +489,6 @@ async function gh(path, options = {}){
   }
   return res.json();
 }
-
 async function getFile(path){
   const json = await gh(`contents/${path}?ref=${encodeURIComponent(state.branch)}`);
   if (!json) return null;
@@ -619,8 +506,6 @@ async function saveData(message){
   const res = await putFile('data.json', utf8ToB64(JSON.stringify(state.data, null, 2)), message, state.dataSha);
   state.dataSha = res.content.sha;
 }
-
-// PUT with real upload progress, via XHR (fetch can't report upload progress)
 function putFileWithProgress(path, base64Content, message, onProgress){
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -650,14 +535,8 @@ function readFileAsBase64(file){
 
 // ---------- Connect ----------
 
-function showConnectError(message){
-  const box = document.getElementById('connectError');
-  box.textContent = message; box.style.display = 'block';
-}
-function clearConnectError(){
-  const box = document.getElementById('connectError');
-  box.style.display='none'; box.textContent='';
-}
+function showConnectError(message){ const box=document.getElementById('connectError'); box.textContent=message; box.style.display='block'; }
+function clearConnectError(){ const box=document.getElementById('connectError'); box.style.display='none'; box.textContent=''; }
 
 async function attemptConnect(){
   clearConnectError();
@@ -715,7 +594,6 @@ function disconnect(){
   document.getElementById('appShell').style.display = 'none';
   document.getElementById('authScreen').style.display = 'flex';
 }
-
 async function reloadData(){
   try{
     const existing = await getFile('data.json');
@@ -728,41 +606,31 @@ async function reloadData(){
     }
   } catch(err){ log(err.message, 'err'); }
 }
-
 function copyRawUrl(){
   const url = `https://raw.githubusercontent.com/${state.owner}/${state.repo}/${state.branch}/data.json`;
-  navigator.clipboard?.writeText(url).then(
-    () => toast('Copied data.json URL to clipboard', 'ok'),
-    () => toast(url, 'info')
-  );
+  navigator.clipboard?.writeText(url).then(() => toast('Copied data.json URL to clipboard', 'ok'), () => toast(url, 'info'));
 }
 
 // ---------- Navigation ----------
 
 function goHome(){
-  state.currentFacultyId = null; state.currentYear = null; state.currentSubjectCode = null;
+  state.currentFacultyId = null; state.currentYear = null; state.currentSemester = null; state.currentSubjectCode = null;
   renderView();
 }
-function selectFaculty(id){
-  state.currentFacultyId = id; state.currentYear = null; state.currentSubjectCode = null;
-  renderView();
-}
-function selectYear(year){
-  state.currentYear = year; state.currentSubjectCode = null;
-  renderView();
-}
-function selectSubject(code){
-  state.currentSubjectCode = code;
-  renderView();
-}
+function selectFaculty(id){ state.currentFacultyId = id; state.currentYear = null; state.currentSemester = null; state.currentSubjectCode = null; renderView(); }
+function selectYear(year){ state.currentYear = year; state.currentSemester = null; state.currentSubjectCode = null; renderView(); }
+function selectSemester(sem){ state.currentSemester = sem; state.currentSubjectCode = null; renderView(); }
+function selectSubject(code){ state.currentSubjectCode = code; renderView(); }
 
 function getCurrentFaculty(){ return state.data.faculties.find(f => f.id === state.currentFacultyId) || null; }
 function getCurrentYearObj(){ const f = getCurrentFaculty(); return f ? f.years.find(y => y.year === state.currentYear) : null; }
-function getCurrentSubjectObj(){ const y = getCurrentYearObj(); return y ? y.subjects.find(s => s.code === state.currentSubjectCode) : null; }
+function getCurrentSemesterObj(){ const y = getCurrentYearObj(); return y ? y.semesters.find(s => s.semester === state.currentSemester) : null; }
+function getCurrentSubjectObj(){ const sem = getCurrentSemesterObj(); return sem ? sem.subjects.find(s => s.code === state.currentSubjectCode) : null; }
 
 function totalYears(){ return state.data.faculties.reduce((n,f)=>n+f.years.length,0); }
-function totalSubjects(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.subjects.length,0),0); }
-function totalPapers(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.subjects.reduce((k,s)=>k+s.papers.length,0),0),0); }
+function totalSemesters(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.semesters.length,0),0); }
+function totalSubjects(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.semesters.reduce((k,sm)=>k+sm.subjects.length,0),0),0); }
+function totalPapers(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.semesters.reduce((k,sm)=>k+sm.subjects.reduce((j,s)=>j+s.papers.length,0),0),0),0); }
 
 // ---------- Render: sidebar ----------
 
@@ -780,13 +648,12 @@ function renderSidebarNav(){
   `).join('') || `<div style="padding:10px; font-size:12.5px; color:#64748B;">No faculties yet.</div>`;
 }
 
-// ---------- Render: breadcrumb ----------
-
 function renderBreadcrumb(){
-  const f = getCurrentFaculty(), y = getCurrentYearObj(), s = getCurrentSubjectObj();
+  const f = getCurrentFaculty(), y = getCurrentYearObj(), sem = getCurrentSemesterObj(), s = getCurrentSubjectObj();
   const parts = [`<span class="crumb ${!f?'current':''}" onclick="goHome()">Overview</span>`];
   if (f){ parts.push('<span class="sep">/</span>'); parts.push(`<span class="crumb ${!y?'current':''}" onclick="selectFaculty('${f.id}')">${escapeHtml(f.name)}</span>`); }
-  if (y){ parts.push('<span class="sep">/</span>'); parts.push(`<span class="crumb ${!s?'current':''}" onclick="selectYear('${y.year}')">${escapeHtml(y.year)}</span>`); }
+  if (y){ parts.push('<span class="sep">/</span>'); parts.push(`<span class="crumb ${!sem?'current':''}" onclick="selectYear('${y.year}')">${escapeHtml(y.year)}</span>`); }
+  if (sem){ parts.push('<span class="sep">/</span>'); parts.push(`<span class="crumb ${!s?'current':''}" onclick="selectSemester('${escapeHtml(sem.semester)}')">${escapeHtml(sem.semester)}</span>`); }
   if (s){ parts.push('<span class="sep">/</span>'); parts.push(`<span class="crumb current">${escapeHtml(s.name)}</span>`); }
   document.getElementById('breadcrumb').innerHTML = parts.join('');
 }
@@ -795,11 +662,12 @@ function renderView(){
   renderSidebarNav();
   renderBreadcrumb();
   const content = document.getElementById('content');
-  const f = getCurrentFaculty(), y = getCurrentYearObj(), s = getCurrentSubjectObj();
+  const f = getCurrentFaculty(), y = getCurrentYearObj(), sem = getCurrentSemesterObj(), s = getCurrentSubjectObj();
   if (!f) return renderOverview(content);
   if (!y) return renderYears(content, f);
-  if (!s) return renderSubjects(content, f, y);
-  return renderPapers(content, f, y, s);
+  if (!sem) return renderSemesters(content, f, y);
+  if (!s) return renderSubjects(content, f, y, sem);
+  return renderPapers(content, f, y, sem, s);
 }
 
 // ---------- Overview ----------
@@ -808,45 +676,22 @@ function renderOverview(content){
   const f = state.data.faculties;
   content.innerHTML = `
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="top"><div class="stat-icon" style="background:var(--primary-container); color:var(--primary);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>
-        </div></div>
-        <div class="stat-value">${f.length}</div><div class="stat-label">Faculties</div>
-      </div>
-      <div class="stat-card">
-        <div class="top"><div class="stat-icon" style="background:#ECFDF5; color:var(--success);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div></div>
-        <div class="stat-value">${totalYears()}</div><div class="stat-label">Years</div>
-      </div>
-      <div class="stat-card">
-        <div class="top"><div class="stat-icon" style="background:#F0FDFA; color:var(--secondary);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        </div></div>
-        <div class="stat-value">${totalSubjects()}</div><div class="stat-label">Subjects</div>
-      </div>
-      <div class="stat-card">
-        <div class="top"><div class="stat-icon" style="background:#FEF2F2; color:var(--error);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        </div></div>
-        <div class="stat-value">${totalPapers()}</div><div class="stat-label">Papers</div>
-      </div>
+      <div class="stat-card"><div class="top"><div class="stat-icon" style="background:var(--primary-container); color:var(--primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg></div></div><div class="stat-value">${f.length}</div><div class="stat-label">Faculties</div></div>
+      <div class="stat-card"><div class="top"><div class="stat-icon" style="background:#ECFDF5; color:var(--success);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div></div><div class="stat-value">${totalYears()}</div><div class="stat-label">Years</div></div>
+      <div class="stat-card"><div class="top"><div class="stat-icon" style="background:#FFF7ED; color:var(--warning);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div><div class="stat-value">${totalSemesters()}</div><div class="stat-label">Semesters</div></div>
+      <div class="stat-card"><div class="top"><div class="stat-icon" style="background:#F0FDFA; color:var(--secondary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div></div><div class="stat-value">${totalSubjects()}</div><div class="stat-label">Subjects</div></div>
+      <div class="stat-card"><div class="top"><div class="stat-icon" style="background:#FEF2F2; color:var(--error);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div></div><div class="stat-value">${totalPapers()}</div><div class="stat-label">Papers</div></div>
     </div>
 
-    <div class="section-head">
-      <div><h2>Faculties</h2><div class="desc">Select one to manage its years, subjects and papers.</div></div>
-    </div>
+    <div class="section-head"><div><h2>Faculties</h2><div class="desc">Select one to manage its years, semesters, subjects and papers.</div></div></div>
     <div class="card-grid">
       ${f.map(fac => `
         <div class="entity-card" onclick="selectFaculty('${fac.id}')">
-          <button class="del-x" onclick="event.stopPropagation(); deleteFaculty('${fac.id}')" title="Delete">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
+          <button class="del-x" onclick="event.stopPropagation(); deleteFaculty('${fac.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
           <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg></div>
           <h3>${escapeHtml(fac.name)}</h3>
           <div class="meta">${fac.id}</div>
-          <div class="count">${fac.years.length} year${fac.years.length===1?'':'s'} · ${fac.years.reduce((n,y)=>n+y.subjects.length,0)} subjects</div>
+          <div class="count">${fac.years.length} year${fac.years.length===1?'':'s'}</div>
         </div>
       `).join('')}
       <div class="add-card" onclick="document.getElementById('sidebarNewFaculty').focus()">
@@ -872,13 +717,8 @@ async function addFaculty(){
   const id = slugify(name);
   if (state.data.faculties.some(fac => fac.id === id)){ toast('A faculty with that name already exists.', 'err'); return; }
   state.data.faculties.push({ id, name, years: [] });
-  try{
-    await saveData(`Add faculty: ${name}`);
-    input.value = '';
-    log(`Added faculty "${name}".`, 'ok');
-    toast(`Added "${name}"`, 'ok');
-    renderView();
-  } catch(err){ log(err.message, 'err'); }
+  try{ await saveData(`Add faculty: ${name}`); input.value=''; log(`Added faculty "${name}".`, 'ok'); toast(`Added "${name}"`, 'ok'); renderView(); }
+  catch(err){ log(err.message, 'err'); }
 }
 async function deleteFaculty(id){
   const fac = state.data.faculties.find(f => f.id === id);
@@ -886,8 +726,7 @@ async function deleteFaculty(id){
   state.data.faculties = state.data.faculties.filter(f => f.id !== id);
   try{
     await saveData(`Remove faculty: ${id}`);
-    log('Faculty removed.', 'ok');
-    toast('Faculty removed', 'ok');
+    log('Faculty removed.', 'ok'); toast('Faculty removed', 'ok');
     if (state.currentFacultyId === id) goHome(); else renderView();
   } catch(err){ log(err.message, 'err'); }
 }
@@ -896,13 +735,11 @@ async function deleteFaculty(id){
 
 function renderYears(content, f){
   content.innerHTML = `
-    <div class="section-head">
-      <div><h2>${escapeHtml(f.name)} — Years</h2><div class="desc">Choose a year to manage its subjects.</div></div>
-    </div>
+    <div class="section-head"><div><h2>${escapeHtml(f.name)} — Years</h2><div class="desc">Choose a year to manage its semesters.</div></div></div>
     <div class="chip-row">
       ${f.years.map(y => `
         <div class="chip ${y.year===state.currentYear?'active':''}" onclick="selectYear('${y.year}')">
-          ${escapeHtml(y.year)} <span style="opacity:0.75; font-weight:500;">${y.subjects.length}</span>
+          ${escapeHtml(y.year)} <span style="opacity:0.75; font-weight:500;">${y.semesters.length}</span>
           <span class="del" onclick="event.stopPropagation(); deleteYear('${y.year}')">✕</span>
         </div>
       `).join('')}
@@ -912,17 +749,12 @@ function renderYears(content, f){
       <div class="empty-state">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         <div class="title">No years yet</div>
-        <div class="sub">Add a year to start organising subjects under ${escapeHtml(f.name)}.</div>
-      </div>` : `<div class="empty-state"><div class="sub">Select a year above to view or add subjects.</div></div>`}
+        <div class="sub">Add a year to start organising semesters under ${escapeHtml(f.name)}.</div>
+      </div>` : `<div class="empty-state"><div class="sub">Select a year above to view or add semesters.</div></div>`}
   `;
 }
 
-let pendingModal = null;
-function openModal(id){
-  document.getElementById(id).classList.add('show');
-  const first = document.querySelector(`#${id} input`);
-  if (first){ first.value=''; setTimeout(()=>first.focus(), 50); }
-}
+function openModal(id){ document.getElementById(id).classList.add('show'); const first=document.querySelector(`#${id} input`); if(first){first.value='';setTimeout(()=>first.focus(),50);} }
 function closeModal(id){ document.getElementById(id).classList.remove('show'); }
 
 async function submitYearModal(){
@@ -930,14 +762,9 @@ async function submitYearModal(){
   if (!year) return;
   const f = getCurrentFaculty();
   if (f.years.some(y => y.year === year)){ toast('That year already exists for this faculty.', 'err'); return; }
-  f.years.push({ year, subjects: [] });
-  try{
-    await saveData(`Add year ${year} to ${f.name}`);
-    log(`Added year "${year}" under ${f.name}.`, 'ok');
-    toast(`Added ${year}`, 'ok');
-    closeModal('yearModal');
-    renderView();
-  } catch(err){ log(err.message, 'err'); }
+  f.years.push({ year, semesters: [] });
+  try{ await saveData(`Add year ${year} to ${f.name}`); log(`Added year "${year}" under ${f.name}.`, 'ok'); toast(`Added ${year}`, 'ok'); closeModal('yearModal'); renderView(); }
+  catch(err){ log(err.message, 'err'); }
 }
 async function deleteYear(year){
   if (!confirm(`Delete ${year} and everything under it from data.json?`)) return;
@@ -945,26 +772,65 @@ async function deleteYear(year){
   f.years = f.years.filter(y => y.year !== year);
   try{
     await saveData(`Remove year ${year} from ${f.name}`);
-    log('Year removed.', 'ok');
-    toast('Year removed', 'ok');
+    log('Year removed.', 'ok'); toast('Year removed', 'ok');
     if (state.currentYear === year) state.currentYear = null;
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+// ---------- Semesters ----------
+
+function renderSemesters(content, f, y){
+  content.innerHTML = `
+    <div class="section-head"><div><h2>${escapeHtml(f.name)} · ${escapeHtml(y.year)} — Semesters</h2><div class="desc">Choose a semester to manage its subjects.</div></div></div>
+    <div class="chip-row">
+      ${y.semesters.map(sem => `
+        <div class="chip ${sem.semester===state.currentSemester?'active':''}" onclick="selectSemester('${escapeHtml(sem.semester)}')">
+          ${escapeHtml(sem.semester)} <span style="opacity:0.75; font-weight:500;">${sem.subjects.length}</span>
+          <span class="del" onclick="event.stopPropagation(); deleteSemester('${escapeHtml(sem.semester)}')">✕</span>
+        </div>
+      `).join('')}
+      <button class="chip-add" onclick="openModal('semesterModal')">+ Add semester</button>
+    </div>
+    ${y.semesters.length===0 ? `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="title">No semesters yet</div>
+        <div class="sub">Add one for ${escapeHtml(y.year)} to start organising subjects.</div>
+      </div>` : `<div class="empty-state"><div class="sub">Select a semester above to view or add subjects.</div></div>`}
+  `;
+}
+
+async function submitSemesterModal(){
+  const semester = document.getElementById('modalSemesterInput').value.trim();
+  if (!semester) return;
+  const y = getCurrentYearObj();
+  if (y.semesters.some(s => s.semester === semester)){ toast('That semester already exists for this year.', 'err'); return; }
+  y.semesters.push({ semester, subjects: [] });
+  try{ await saveData(`Add semester ${semester} to ${getCurrentFaculty().name} ${y.year}`); log(`Added "${semester}" under ${y.year}.`, 'ok'); toast(`Added ${semester}`, 'ok'); closeModal('semesterModal'); renderView(); }
+  catch(err){ log(err.message, 'err'); }
+}
+async function deleteSemester(semester){
+  if (!confirm(`Delete "${semester}" and everything under it from data.json?`)) return;
+  const y = getCurrentYearObj();
+  y.semesters = y.semesters.filter(s => s.semester !== semester);
+  try{
+    await saveData(`Remove semester ${semester}`);
+    log('Semester removed.', 'ok'); toast('Semester removed', 'ok');
+    if (state.currentSemester === semester) state.currentSemester = null;
     renderView();
   } catch(err){ log(err.message, 'err'); }
 }
 
 // ---------- Subjects ----------
 
-function renderSubjects(content, f, y){
+function renderSubjects(content, f, y, sem){
   content.innerHTML = `
-    <div class="section-head">
-      <div><h2>${escapeHtml(f.name)} · ${escapeHtml(y.year)} — Subjects</h2><div class="desc">Choose a subject to upload or manage its papers.</div></div>
-    </div>
+    <div class="section-head"><div><h2>${escapeHtml(f.name)} · ${escapeHtml(y.year)} · ${escapeHtml(sem.semester)} — Subjects</h2><div class="desc">Choose a subject to upload or manage its papers.</div></div></div>
     <div class="card-grid">
-      ${y.subjects.map(s => `
+      ${sem.subjects.map(s => `
         <div class="entity-card" onclick="selectSubject('${s.code}')">
-          <button class="del-x" onclick="event.stopPropagation(); deleteSubject('${s.code}')" title="Delete">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
+          <button class="del-x" onclick="event.stopPropagation(); deleteSubject('${s.code}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
           <div class="icon-wrap" style="background:linear-gradient(135deg,#0D9488,#0F766E);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
           <h3>${escapeHtml(s.name)}</h3>
           <div class="meta">${escapeHtml(s.code)}</div>
@@ -976,11 +842,11 @@ function renderSubjects(content, f, y){
         <span>Add subject</span>
       </div>
     </div>
-    ${y.subjects.length===0 ? `
+    ${sem.subjects.length===0 ? `
       <div class="empty-state">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         <div class="title">No subjects yet</div>
-        <div class="sub">Add one for ${escapeHtml(y.year)} to start uploading papers.</div>
+        <div class="sub">Add one for ${escapeHtml(sem.semester)} to start uploading papers.</div>
       </div>` : ''}
   `;
 }
@@ -989,25 +855,21 @@ async function submitSubjectModal(){
   const name = document.getElementById('modalSubjectName').value.trim();
   const code = document.getElementById('modalSubjectCode').value.trim();
   if (!name || !code) return;
-  const y = getCurrentYearObj();
-  if (y.subjects.some(s => s.code === code)){ toast('That subject code already exists for this year.', 'err'); return; }
-  y.subjects.push({ name, code, papers: [] });
-  try{
-    await saveData(`Add subject ${code} to ${getCurrentFaculty().name} ${y.year}`);
-    log(`Added subject "${name}" (${code}).`, 'ok');
-    toast(`Added "${name}"`, 'ok');
-    closeModal('subjectModal');
-    renderView();
-  } catch(err){ log(err.message, 'err'); }
+  const sem = getCurrentSemesterObj();
+  if (sem.subjects.some(s => s.code === code)){ toast('That subject code already exists for this semester.', 'err'); return; }
+  const f = getCurrentFaculty(), y = getCurrentYearObj();
+  const id = `${f.id}-${y.year}-${slugify(sem.semester)}-${slugify(code)}`;
+  sem.subjects.push({ id, name, code, papers: [] });
+  try{ await saveData(`Add subject ${code} to ${f.name} ${y.year} ${sem.semester}`); log(`Added subject "${name}" (${code}).`, 'ok'); toast(`Added "${name}"`, 'ok'); closeModal('subjectModal'); renderView(); }
+  catch(err){ log(err.message, 'err'); }
 }
 async function deleteSubject(code){
   if (!confirm('Delete this subject and its papers from data.json?')) return;
-  const y = getCurrentYearObj();
-  y.subjects = y.subjects.filter(s => s.code !== code);
+  const sem = getCurrentSemesterObj();
+  sem.subjects = sem.subjects.filter(s => s.code !== code);
   try{
     await saveData(`Remove subject ${code}`);
-    log('Subject removed.', 'ok');
-    toast('Subject removed', 'ok');
+    log('Subject removed.', 'ok'); toast('Subject removed', 'ok');
     if (state.currentSubjectCode === code) state.currentSubjectCode = null;
     renderView();
   } catch(err){ log(err.message, 'err'); }
@@ -1017,18 +879,12 @@ async function deleteSubject(code){
 
 let selectedFile = null;
 
-function renderPapers(content, f, y, s){
+function renderPapers(content, f, y, sem, s){
   selectedFile = null;
   content.innerHTML = `
     <div class="upload-card">
-      <h3>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        Upload a question paper
-      </h3>
-      <div class="field-group">
-        <label>Paper name</label>
-        <input type="text" id="newPaperName" placeholder="e.g. Winter 2024 Regular">
-      </div>
+      <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload a question paper</h3>
+      <div class="field-group"><label>Paper name / label</label><input type="text" id="newPaperName" placeholder="e.g. Winter 2024 Regular"></div>
       <div class="dropzone" id="dropzone">
         <input type="file" id="newPaperFile" accept="application/pdf">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -1042,12 +898,10 @@ function renderPapers(content, f, y, s){
           Upload &amp; add
         </button>
       </div>
-      <div class="hint">Files commit to <span class="mono">papers/${f.id}/${y.year}/${s.code}/…</span>. Very large PDFs (roughly 20–30&nbsp;MB+) may fail through this API — compress or split those first.</div>
+      <div class="hint">Files commit to <span class="mono">papers/${f.id}/${y.year}/${slugify(sem.semester)}/${s.code}/…</span>. Very large PDFs (roughly 20–30&nbsp;MB+) may fail through this API — compress or split those first.</div>
     </div>
 
-    <div class="section-head">
-      <div><h2>${escapeHtml(s.name)} <span style="color:var(--text-secondary); font-weight:600;">(${escapeHtml(s.code)})</span></h2><div class="desc">${s.papers.length} paper${s.papers.length===1?'':'s'} uploaded</div></div>
-    </div>
+    <div class="section-head"><div><h2>${escapeHtml(s.name)} <span style="color:var(--text-secondary); font-weight:600;">(${escapeHtml(s.code)})</span></h2><div class="desc">${s.papers.length} paper${s.papers.length===1?'':'s'} uploaded</div></div></div>
     <div id="papersList">
       ${s.papers.map((p, i) => `
         <div class="paper-row">
@@ -1055,7 +909,7 @@ function renderPapers(content, f, y, s){
             <div class="pdf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
             <div>
               <a class="name" href="${p.url}" target="_blank" rel="noopener">${escapeHtml(p.name)}</a>
-              <div class="path">${escapeHtml(p.path || p.url)}</div>
+              <div class="path">${escapeHtml(p.fileSize || '')}${p.fileSize ? ' · ' : ''}${escapeHtml(p.path || p.url)}</div>
             </div>
           </div>
           <button class="btn btn-danger btn-sm" onclick="deletePaper(${i})">Delete</button>
@@ -1080,7 +934,7 @@ function setupDropzone(){
     selectedFile = file;
     dz.classList.add('has-file');
     document.getElementById('dzTitle').textContent = file.name;
-    document.getElementById('dzSub').innerHTML = `${(file.size/1024/1024).toFixed(2)} MB — click to replace`;
+    document.getElementById('dzSub').innerHTML = `${fmtSize(file.size)} — click to replace`;
   };
   fileInput.addEventListener('change', () => setFile(fileInput.files[0]));
   ['dragenter','dragover'].forEach(evt => dz.addEventListener(evt, e => { e.preventDefault(); dz.classList.add('drag'); }));
@@ -1099,14 +953,24 @@ async function addPaper(){
   btn.disabled = true; btn.innerHTML = 'Uploading…';
   track.style.display = 'block'; fill.style.width = '0%';
 
-  const f = getCurrentFaculty(), y = getCurrentYearObj(), s = getCurrentSubjectObj();
-  const path = `papers/${f.id}/${y.year}/${s.code}/${slugify(name)}-${Date.now()}.pdf`;
+  const f = getCurrentFaculty(), y = getCurrentYearObj(), sem = getCurrentSemesterObj(), s = getCurrentSubjectObj();
+  const semSlug = slugify(sem.semester);
+  const path = `papers/${f.id}/${y.year}/${semSlug}/${s.code}/${slugify(name)}-${Date.now()}.pdf`;
+  const paperId = `${s.id}-${slugify(name)}-${Date.now()}`;
 
   try{
     const base64 = await readFileAsBase64(selectedFile);
-    log(`Uploading ${selectedFile.name} (${(selectedFile.size/1024/1024).toFixed(2)} MB)…`);
+    log(`Uploading ${selectedFile.name} (${fmtSize(selectedFile.size)})…`);
     const res = await putFileWithProgress(path, base64, `Add paper: ${name} (${s.code} ${y.year})`, pct => { fill.style.width = pct + '%'; });
-    s.papers.push({ name, url: res.content.download_url, path });
+    s.papers.push({
+      id: paperId,
+      name,
+      year: y.year,
+      fileName: selectedFile.name,
+      fileSize: fmtSize(selectedFile.size),
+      url: res.content.download_url,
+      path
+    });
     await saveData(`Reference paper: ${name}`);
     log(`Uploaded and linked "${name}".`, 'ok');
     toast(`Uploaded "${name}"`, 'ok');
@@ -1131,8 +995,7 @@ async function deletePaper(index){
     }
     s.papers.splice(index, 1);
     await saveData(`Remove paper: ${paper.name}`);
-    log('Paper removed.', 'ok');
-    toast('Paper removed', 'ok');
+    log('Paper removed.', 'ok'); toast('Paper removed', 'ok');
     renderView();
   } catch(err){ log(err.message, 'err'); }
 }
