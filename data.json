@@ -3,7 +3,12 @@
     {
       "id": "deploma-cs",
       "name": "Deploma CS",
-      "years": []
+      "years": [
+        {
+          "year": "2025",
+          "semesters": []
+        }
+      ]
     }
   ]
 }
