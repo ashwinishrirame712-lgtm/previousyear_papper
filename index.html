@@ -3,306 +3,497 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paper Archive — Admin</title>
+<title>Paper Archive — Admin Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F1ECDF;
-    --panel:#FFFFFF;
-    --card:#FBF8F1;
-    --ink:#1F3D2B;
-    --ink-soft:#3C5C46;
-    --brick:#8C3B2E;
-    --brick-soft:#B24E3D;
-    --brass:#A8791A;
-    --border:#D9CFB8;
-    --text:#24261F;
-    --muted:#6B6558;
-    --mono:'IBM Plex Mono', monospace;
-    --serif:'Source Serif 4', Georgia, serif;
-    --sans:'Inter', system-ui, sans-serif;
+    --primary:#4F46E5;
+    --primary-dark:#3730A3;
+    --primary-light:#818CF8;
+    --primary-container:#EEF2FF;
+    --secondary:#0D9488;
+    --secondary-dark:#0F766E;
+    --secondary-light:#2DD4BF;
+    --accent:#8B5CF6;
+    --bg:#F8FAFC;
+    --surface:#FFFFFF;
+    --input-bg:#F1F5F9;
+    --text-primary:#0F172A;
+    --text-secondary:#64748B;
+    --text-hint:#94A3B8;
+    --success:#10B981;
+    --error:#EF4444;
+    --warning:#F59E0B;
+    --info:#3B82F6;
+    --divider:#E2E8F0;
+    --border:#CBD5E1;
+    --gradient-primary: linear-gradient(135deg, #4F46E5, #7C3AED);
+    --gradient-card: linear-gradient(135deg, #6366F1, #4F46E5);
+    --gradient-github: linear-gradient(135deg, #0F172A, #1E293B);
+    --r-lg:20px; --r-md:14px; --r-sm:10px;
+    --shadow-sm: 0 1px 2px rgba(15,23,42,0.06);
+    --shadow-md: 0 4px 16px rgba(15,23,42,0.08);
+    --shadow-lg: 0 12px 32px rgba(15,23,42,0.14);
   }
   *{box-sizing:border-box;}
+  html,body{height:100%;}
   body{
     margin:0;
     background:var(--bg);
-    color:var(--text);
-    font-family:var(--sans);
-    min-height:100vh;
+    color:var(--text-primary);
+    font-family:'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
   }
-  header.top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:22px 32px;
-    border-bottom:2px solid var(--ink);
-    background:var(--bg);
-  }
-  header.top h1{
-    font-family:var(--serif);
-    font-size:22px;
-    margin:0;
-    color:var(--ink);
-    letter-spacing:0.2px;
-  }
-  header.top .sub{
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--muted);
-    margin-top:2px;
-  }
-  .stamp{
-    font-family:var(--mono);
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    border:2px solid var(--brick);
-    color:var(--brick);
-    padding:6px 12px;
-    border-radius:4px;
-    transform:rotate(-2deg);
-    background:rgba(140,59,46,0.05);
-  }
-  .stamp.connected{
-    border-color:var(--ink);
-    color:var(--ink);
-    background:rgba(31,61,43,0.06);
-  }
-  .stamp.pending{
-    border-color:var(--brass);
-    color:var(--brass);
-    background:rgba(168,121,26,0.07);
-    transform:rotate(0deg);
-  }
-  .error-box{
-    margin-top:14px;
-    padding:12px 14px;
-    border:1px solid var(--brick);
-    background:rgba(140,59,46,0.06);
-    border-radius:6px;
-    color:var(--brick);
-    font-size:13px;
-    font-family:var(--mono);
-    white-space:pre-wrap;
-    word-break:break-word;
-  }
-  main{
-    max-width:980px;
-    margin:0 auto;
-    padding:28px 24px 80px;
-  }
-  .panel{
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:22px 24px;
-    margin-bottom:20px;
-  }
-  .panel h2{
-    font-family:var(--serif);
-    font-size:17px;
-    margin:0 0 14px;
-    color:var(--ink);
-  }
-  label{
-    display:block;
-    font-size:12px;
-    font-family:var(--mono);
-    color:var(--muted);
-    margin-bottom:5px;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-  }
-  input[type=text], input[type=password], input[type=file]{
-    width:100%;
-    padding:9px 10px;
-    border:1px solid var(--border);
-    border-radius:6px;
-    font-family:var(--sans);
-    font-size:14px;
-    background:#fff;
-    color:var(--text);
-  }
-  input:focus{outline:2px solid var(--brass); outline-offset:1px;}
-  .row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:12px;}
-  .row > div{flex:1; min-width:160px;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  ::selection{background:var(--primary-light); color:#fff;}
+
   button{
-    font-family:var(--sans);
-    font-weight:600;
-    font-size:13px;
-    padding:9px 16px;
-    border-radius:6px;
-    border:1px solid var(--ink);
-    background:var(--ink);
-    color:#fff;
+    font-family:inherit;
     cursor:pointer;
-  }
-  button:hover{background:var(--ink-soft);}
-  button.secondary{
-    background:transparent;
-    color:var(--ink);
-  }
-  button.secondary:hover{background:rgba(31,61,43,0.06);}
-  button.danger{
-    border-color:var(--brick);
-    background:transparent;
-    color:var(--brick);
-    padding:5px 10px;
-    font-size:12px;
-  }
-  button.danger:hover{background:rgba(140,59,46,0.08);}
-  button:disabled{opacity:0.45; cursor:not-allowed;}
-
-  .breadcrumb{
-    font-family:var(--mono);
-    font-size:13px;
-    color:var(--muted);
-    margin-bottom:16px;
-  }
-  .breadcrumb a{color:var(--ink); cursor:pointer; text-decoration:none; border-bottom:1px dotted var(--ink);}
-  .breadcrumb a:hover{color:var(--brick);}
-
-  .tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px;}
-  .tab{
-    position:relative;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-bottom:none;
-    border-radius:8px 8px 0 0;
-    padding:12px 18px 14px;
-    cursor:pointer;
-    font-family:var(--serif);
+    border:none;
     font-weight:600;
-    font-size:14px;
-    color:var(--ink);
-    top:4px;
+    letter-spacing:0.1px;
   }
-  .tab:hover{top:0; box-shadow:0 -2px 0 var(--brass) inset;}
-  .tab .count{
-    display:block;
-    font-family:var(--mono);
-    font-weight:400;
-    font-size:11px;
-    color:var(--muted);
-    margin-top:3px;
+  button:disabled{opacity:0.5; cursor:not-allowed;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 18px; border-radius:12px; font-size:14px;
+    transition:transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
   }
-  .tab .del{
-    position:absolute; top:6px; right:6px;
-    font-size:11px; color:var(--muted); background:none; border:none; padding:2px 5px;
+  .btn svg{width:16px; height:16px; flex-shrink:0;}
+  .btn-primary{ background:var(--gradient-primary); color:#fff; box-shadow:0 4px 14px rgba(79,70,229,0.35); }
+  .btn-primary:hover:not(:disabled){ transform:translateY(-1px); box-shadow:0 6px 18px rgba(79,70,229,0.42); }
+  .btn-secondary{ background:var(--primary-container); color:var(--primary); }
+  .btn-secondary:hover:not(:disabled){ background:#E0E7FF; }
+  .btn-ghost{ background:transparent; color:var(--text-secondary); }
+  .btn-ghost:hover:not(:disabled){ background:var(--input-bg); }
+  .btn-danger{ background:transparent; color:var(--error); }
+  .btn-danger:hover:not(:disabled){ background:#FEF2F2; }
+  .btn-sm{ padding:7px 12px; font-size:13px; border-radius:9px; }
+  .icon-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:38px; height:38px; border-radius:11px; background:rgba(255,255,255,0.16); color:#fff;
   }
-  .tab .del:hover{color:var(--brick);}
-  .shelf{
-    border:1px solid var(--border);
-    border-radius:0 8px 8px 8px;
-    background:var(--card);
-    padding:18px;
-    margin-bottom:20px;
-  }
-  .empty{color:var(--muted); font-size:13px; font-style:italic;}
+  .icon-btn:hover{ background:rgba(255,255,255,0.26); }
+  .icon-btn svg{width:19px; height:19px;}
 
+  input[type=text], input[type=password]{
+    width:100%; padding:11px 13px; border-radius:11px; border:1.5px solid var(--divider);
+    background:var(--input-bg); font-size:14px; color:var(--text-primary); font-family:inherit;
+  }
+  input:focus{ outline:none; border-color:var(--primary); background:#fff; box-shadow:0 0 0 4px var(--primary-container); }
+  label{ display:block; font-size:12.5px; font-weight:600; color:var(--text-secondary); margin-bottom:6px; }
+
+  /* ---------- Auth / connect screen ---------- */
+  #authScreen{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:var(--gradient-primary); padding:24px;
+  }
+  #authScreen::before{ content:''; }
+  .auth-card{
+    width:100%; max-width:440px; background:#fff; border-radius:24px; padding:36px 34px;
+    box-shadow:var(--shadow-lg);
+  }
+  .auth-logo{
+    width:56px; height:56px; border-radius:16px; background:var(--gradient-card);
+    display:flex; align-items:center; justify-content:center; margin-bottom:18px;
+    box-shadow:0 6px 16px rgba(79,70,229,0.3);
+  }
+  .auth-logo svg{width:28px; height:28px; color:#fff;}
+  .auth-card h1{ font-size:21px; margin:0 0 4px; font-weight:800; letter-spacing:-0.3px; }
+  .auth-card .sub{ color:var(--text-secondary); font-size:13.5px; margin-bottom:26px; }
+  .field-group{ margin-bottom:14px; }
+  .field-row{ display:flex; gap:10px; }
+  .field-row > div{ flex:1; }
+  .hint{ font-size:12px; color:var(--text-hint); line-height:1.6; margin-top:10px; }
+  .error-box{
+    margin-top:14px; padding:12px 14px; border-radius:12px;
+    background:#FEF2F2; border:1px solid #FECACA; color:#B91C1C;
+    font-size:12.5px; font-family:'JetBrains Mono', monospace; white-space:pre-wrap; word-break:break-word;
+  }
+
+  /* ---------- App shell ---------- */
+  #appShell{ display:none; min-height:100vh; }
+  .sidebar{
+    width:272px; flex-shrink:0; background:var(--gradient-github); color:#fff;
+    padding:22px 16px; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow-y:auto;
+  }
+  .brand{ display:flex; align-items:center; gap:11px; padding:4px 8px 20px; }
+  .brand-badge{
+    width:38px; height:38px; border-radius:11px; background:rgba(255,255,255,0.14);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .brand-badge svg{width:20px; height:20px;}
+  .brand-name{ font-weight:800; font-size:15px; letter-spacing:-0.2px; }
+  .brand-repo{ font-size:11px; color:#94A3B8; font-family:'JetBrains Mono', monospace; }
+
+  .status-pill{
+    display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:11px;
+    background:rgba(255,255,255,0.08); margin-bottom:18px; font-size:12.5px; color:#CBD5E1;
+  }
+  .dot{ width:8px; height:8px; border-radius:50%; background:var(--text-hint); flex-shrink:0; }
+  .dot.on{ background:var(--secondary-light); box-shadow:0 0 0 3px rgba(45,212,191,0.2); }
+
+  .nav-label{
+    font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#64748B;
+    padding:14px 10px 8px; font-weight:700;
+  }
+  .nav-item{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:10px 12px; border-radius:11px; color:#E2E8F0; font-size:13.5px; font-weight:500;
+    margin-bottom:2px; cursor:pointer; transition:background 0.12s ease;
+  }
+  .nav-item:hover{ background:rgba(255,255,255,0.06); }
+  .nav-item.active{ background:rgba(255,255,255,0.13); color:#fff; font-weight:700; }
+  .nav-item .left{ display:flex; align-items:center; gap:10px; overflow:hidden; }
+  .nav-item .name{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .nav-item .count-badge{
+    font-size:10.5px; font-family:'JetBrains Mono', monospace; color:#94A3B8;
+    background:rgba(255,255,255,0.07); padding:2px 7px; border-radius:100px; flex-shrink:0;
+  }
+  .nav-item .del{ opacity:0; background:none; color:#94A3B8; padding:2px 5px; border-radius:6px; font-size:12px; }
+  .nav-item:hover .del{ opacity:1; }
+  .nav-item .del:hover{ color:#F87171; background:rgba(248,113,113,0.12); }
+
+  .add-inline{ display:flex; gap:6px; padding:6px 4px 2px; }
+  .add-inline input{
+    flex:1; padding:8px 10px; border-radius:9px; border:1.5px solid rgba(255,255,255,0.12);
+    background:rgba(255,255,255,0.07); color:#fff; font-size:13px;
+  }
+  .add-inline input::placeholder{ color:#64748B; }
+  .add-inline input:focus{ outline:none; border-color:var(--primary-light); background:rgba(255,255,255,0.1); box-shadow:none; }
+  .add-inline button{
+    width:34px; flex-shrink:0; border-radius:9px; background:var(--primary); color:#fff; font-size:16px;
+  }
+  .add-inline button:hover{ background:var(--primary-light); }
+
+  .sidebar-footer{ margin-top:auto; padding-top:14px; border-top:1px solid rgba(255,255,255,0.08); }
+  .sidebar-footer .nav-item{ color:#CBD5E1; }
+
+  .main{ flex:1; min-width:0; }
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:18px 30px; background:#fff; border-bottom:1px solid var(--divider); position:sticky; top:0; z-index:5;
+  }
+  .breadcrumb{ display:flex; align-items:center; gap:6px; font-size:13.5px; flex-wrap:wrap; }
+  .breadcrumb .crumb{ color:var(--text-secondary); cursor:pointer; }
+  .breadcrumb .crumb:hover{ color:var(--primary); }
+  .breadcrumb .crumb.current{ color:var(--text-primary); font-weight:700; cursor:default; }
+  .breadcrumb .sep{ color:var(--text-hint); }
+  .topbar-actions{ display:flex; gap:8px; align-items:center; }
+
+  .content{ padding:26px 30px 60px; max-width:1180px; }
+
+  /* Stat cards */
+  .stats-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-bottom:26px; }
+  .stat-card{
+    background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); padding:18px 20px;
+    box-shadow:var(--shadow-sm);
+  }
+  .stat-card .top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .stat-icon{ width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
+  .stat-icon svg{ width:18px; height:18px; }
+  .stat-value{ font-size:26px; font-weight:800; letter-spacing:-0.5px; }
+  .stat-label{ font-size:12.5px; color:var(--text-secondary); font-weight:600; }
+
+  .section-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px; }
+  .section-head h2{ font-size:18px; font-weight:800; letter-spacing:-0.3px; margin:0; }
+  .section-head .desc{ font-size:13px; color:var(--text-secondary); margin-top:2px; }
+
+  /* Card grids (faculty / subject) */
+  .card-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:14px; margin-bottom:8px; }
+  .entity-card{
+    background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); padding:18px;
+    cursor:pointer; position:relative; box-shadow:var(--shadow-sm); transition:box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .entity-card:hover{ box-shadow:var(--shadow-md); transform:translateY(-2px); }
+  .entity-card .icon-wrap{
+    width:42px; height:42px; border-radius:12px; background:var(--gradient-card); color:#fff;
+    display:flex; align-items:center; justify-content:center; margin-bottom:12px;
+  }
+  .entity-card .icon-wrap svg{ width:20px; height:20px; }
+  .entity-card h3{ font-size:15px; font-weight:700; margin:0 0 3px; letter-spacing:-0.1px; }
+  .entity-card .meta{ font-size:12px; color:var(--text-secondary); font-family:'JetBrains Mono', monospace; }
+  .entity-card .count{ font-size:12px; color:var(--text-hint); margin-top:8px; }
+  .entity-card .del-x{
+    position:absolute; top:12px; right:12px; width:26px; height:26px; border-radius:8px;
+    background:var(--input-bg); color:var(--text-hint); display:flex; align-items:center; justify-content:center;
+    opacity:0; transition:opacity 0.12s ease;
+  }
+  .entity-card:hover .del-x{ opacity:1; }
+  .entity-card .del-x:hover{ background:#FEE2E2; color:var(--error); }
+  .entity-card .del-x svg{ width:13px; height:13px; }
+
+  .add-card{
+    border:2px dashed var(--border); border-radius:var(--r-md); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; padding:18px; color:var(--text-secondary); cursor:pointer;
+    background:transparent; min-height:118px;
+  }
+  .add-card:hover{ border-color:var(--primary-light); color:var(--primary); background:var(--primary-container); }
+  .add-card svg{ width:22px; height:22px; margin-bottom:6px; }
+  .add-card span{ font-size:13px; font-weight:600; }
+
+  /* Year chips */
+  .chip-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:22px; }
+  .chip{
+    display:flex; align-items:center; gap:8px; padding:9px 16px; border-radius:100px;
+    background:#fff; border:1.5px solid var(--divider); font-size:13.5px; font-weight:600; cursor:pointer;
+    color:var(--text-secondary);
+  }
+  .chip:hover{ border-color:var(--primary-light); color:var(--primary); }
+  .chip.active{ background:var(--gradient-card); border-color:transparent; color:#fff; box-shadow:0 3px 10px rgba(79,70,229,0.28); }
+  .chip .del{ opacity:0.6; }
+  .chip .del:hover{ opacity:1; }
+  .chip-add{
+    padding:9px 14px; border-radius:100px; border:1.5px dashed var(--border); background:transparent;
+    color:var(--text-secondary); font-size:13.5px; font-weight:600;
+  }
+  .chip-add:hover{ border-color:var(--primary-light); color:var(--primary); }
+
+  /* Papers list */
   .paper-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:10px 12px;
-    border:1px solid var(--border);
-    border-radius:6px;
-    background:#fff;
-    margin-bottom:8px;
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); padding:14px 16px; margin-bottom:10px;
   }
-  .paper-row a{color:var(--ink); font-weight:600; text-decoration:none;}
-  .paper-row a:hover{color:var(--brick);}
-  .paper-row .meta{font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:2px;}
-
-  #log{
-    font-family:var(--mono);
-    font-size:12px;
-    max-height:180px;
-    overflow-y:auto;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:8px;
-    padding:12px 14px;
+  .paper-row .left{ display:flex; align-items:center; gap:13px; min-width:0; }
+  .pdf-icon{
+    width:40px; height:40px; border-radius:10px; background:#FEF2F2; color:var(--error);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
   }
-  #log .line{margin-bottom:4px;}
-  #log .ok{color:var(--ink);}
-  #log .err{color:var(--brick);}
-  #log .info{color:var(--muted);}
+  .pdf-icon svg{ width:19px; height:19px; }
+  .paper-row .name{ font-weight:700; font-size:14px; color:var(--text-primary); text-decoration:none; }
+  .paper-row .name:hover{ color:var(--primary); }
+  .paper-row .path{ font-size:11.5px; color:var(--text-hint); font-family:'JetBrains Mono', monospace; margin-top:2px;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:420px; }
 
-  .hint{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.5;}
-  .inline-form{display:flex; gap:8px; flex-wrap:wrap; align-items:end; margin-top:10px;}
-  .inline-form > div{flex:1; min-width:140px;}
+  .empty-state{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:50px 20px; color:var(--text-secondary); text-align:center;
+  }
+  .empty-state svg{ width:44px; height:44px; color:var(--text-hint); margin-bottom:14px; }
+  .empty-state .title{ font-weight:700; color:var(--text-primary); margin-bottom:4px; font-size:14.5px; }
+  .empty-state .sub{ font-size:13px; }
+
+  /* Upload dropzone */
+  .upload-card{ background:#fff; border:1px solid var(--divider); border-radius:var(--r-lg); padding:22px; margin-bottom:24px; }
+  .upload-card h3{ margin:0 0 14px; font-size:15px; font-weight:800; display:flex; align-items:center; gap:8px; }
+  .dropzone{
+    border:2px dashed var(--border); border-radius:var(--r-md); padding:28px 20px; text-align:center;
+    background:var(--input-bg); cursor:pointer; transition:all 0.15s ease; position:relative;
+  }
+  .dropzone.drag{ border-color:var(--primary); background:var(--primary-container); }
+  .dropzone.has-file{ border-style:solid; border-color:var(--secondary-light); background:#F0FDFA; }
+  .dropzone svg{ width:30px; height:30px; color:var(--text-hint); margin-bottom:10px; }
+  .dropzone .dz-title{ font-weight:700; font-size:14px; color:var(--text-primary); }
+  .dropzone .dz-sub{ font-size:12.5px; color:var(--text-secondary); margin-top:4px; }
+  .dropzone input[type=file]{ position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .file-chip{
+    display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--divider);
+    padding:8px 12px; border-radius:10px; font-size:13px; font-weight:600; margin-top:4px;
+  }
+  .file-chip .x{ color:var(--text-hint); }
+  .file-chip .x:hover{ color:var(--error); }
+
+  .progress-track{ height:8px; border-radius:100px; background:var(--input-bg); overflow:hidden; margin-top:14px; display:none; }
+  .progress-fill{ height:100%; width:0%; background:var(--gradient-card); transition:width 0.15s ease; }
+
+  /* Modal */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(15,23,42,0.55); display:none;
+    align-items:center; justify-content:center; z-index:50; padding:20px;
+  }
+  .modal-overlay.show{ display:flex; }
+  .modal{ background:#fff; border-radius:20px; padding:26px 26px 22px; width:100%; max-width:400px; box-shadow:var(--shadow-lg); }
+  .modal h3{ margin:0 0 16px; font-size:16.5px; font-weight:800; }
+  .modal .actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
+
+  /* Toasts */
+  #toastContainer{ position:fixed; bottom:22px; right:22px; z-index:80; display:flex; flex-direction:column; gap:10px; max-width:360px; }
+  .toast{
+    background:#0F172A; color:#fff; padding:13px 16px; border-radius:12px; font-size:13.5px;
+    display:flex; align-items:flex-start; gap:10px; box-shadow:var(--shadow-lg);
+    animation:toastIn 0.2s ease;
+  }
+  .toast.ok{ background:#065F46; }
+  .toast.err{ background:#7F1D1D; }
+  .toast svg{ width:17px; height:17px; flex-shrink:0; margin-top:1px; }
+  @keyframes toastIn{ from{ opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* Activity log (collapsible, always present) */
+  .log-panel{ background:#fff; border:1px solid var(--divider); border-radius:var(--r-md); overflow:hidden; }
+  .log-head{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; cursor:pointer; }
+  .log-head h3{ margin:0; font-size:13.5px; font-weight:700; color:var(--text-secondary); }
+  .log-body{ display:none; border-top:1px solid var(--divider); padding:12px 18px; max-height:220px; overflow-y:auto; }
+  .log-body.open{ display:block; }
+  .log-line{ font-family:'JetBrains Mono', monospace; font-size:11.5px; margin-bottom:5px; color:var(--text-secondary); }
+  .log-line.ok{ color:var(--success); }
+  .log-line.err{ color:var(--error); }
+
+  @media (max-width:880px){
+    #appShell{ flex-direction:column; }
+    .sidebar{ width:100%; height:auto; position:relative; }
+    .stats-grid{ grid-template-columns:repeat(2,1fr); }
+    .content{ padding:20px 16px 60px; }
+    .topbar{ padding:14px 16px; }
+  }
 </style>
 </head>
 <body>
 
-<header class="top">
-  <div>
-    <h1>Paper Archive — Admin</h1>
-    <div class="sub" id="repoLabel">ashwinishrirame712-lgtm/previousyear_papper</div>
-  </div>
-  <div class="stamp" id="statusStamp">not connected</div>
-</header>
+<div id="toastContainer"></div>
 
-<main>
+<!-- ============ AUTH / CONNECT SCREEN ============ -->
+<div id="authScreen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M20 21H4"/></svg>
+    </div>
+    <h1>Paper Archive Admin</h1>
+    <div class="sub">Connect your GitHub repo to manage faculties, years, subjects and question paper PDFs.</div>
 
-  <!-- Connect panel -->
-  <section class="panel" id="connectPanel">
-    <h2>Connect to GitHub</h2>
-    <div class="row">
-      <div>
+    <div class="field-row" style="margin-bottom:14px;">
+      <div class="field-group" style="margin-bottom:0;">
         <label>Owner</label>
         <input type="text" id="ownerInput" value="ashwinishrirame712-lgtm">
       </div>
-      <div>
+      <div class="field-group" style="margin-bottom:0;">
         <label>Repository</label>
         <input type="text" id="repoInput" value="previousyear_papper">
       </div>
-      <div>
-        <label>Branch</label>
-        <input type="text" id="branchInput" value="main">
-      </div>
     </div>
-    <div class="row">
-      <div style="flex:2; min-width:260px;">
-        <label>Personal access token (classic, repo scope)</label>
-        <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
-      </div>
-      <div style="flex:0 0 auto; align-self:end;">
-        <button id="connectBtn">Connect</button>
-      </div>
+    <div class="field-group">
+      <label>Branch</label>
+      <input type="text" id="branchInput" value="main">
     </div>
-    <div class="hint">
-      The token is kept in memory for this browser tab only — it is never saved to disk or sent anywhere except
-      api.github.com. Reload the page and you'll need to paste it again. Use a classic token with the
-      <strong>repo</strong> scope so it can read and write files in this repository.
+    <div class="field-group" style="margin-bottom:18px;">
+      <label>Personal access token (classic — needs "repo" scope)</label>
+      <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
     </div>
+    <button class="btn btn-primary" id="connectBtn" style="width:100%; justify-content:center;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18c-4.51 2-5-2-7-2"/><path d="M13 21v-3.5a2.5 2.5 0 0 0-.6-1.7c2.9-.3 6-1.5 6-6.4a4.7 4.7 0 0 0-1.3-3.2 4.4 4.4 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.2 12.2 0 0 0-6.4 0C4.7 3.1 3.6 3.4 3.6 3.4a4.4 4.4 0 0 0-.1 3.2A4.7 4.7 0 0 0 2.2 9.8c0 4.9 3 6.1 6 6.4a2.5 2.5 0 0 0-.6 1.7V21"/></svg>
+      Connect to GitHub
+    </button>
+    <div class="hint">Your token stays in memory for this tab only — it's never saved to disk or sent anywhere except <span class="mono">api.github.com</span>. Reloading the page clears it.</div>
     <div id="connectError" class="error-box" style="display:none;"></div>
-  </section>
+  </div>
+</div>
 
-  <!-- Main working area, hidden until connected -->
-  <section id="workArea" style="display:none;">
+<!-- ============ APP SHELL ============ -->
+<div id="appShell" style="display:flex;">
 
-    <div class="breadcrumb" id="breadcrumb"></div>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M20 21H4"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">Paper Archive</div>
+        <div class="brand-repo" id="repoLabel">owner/repo</div>
+      </div>
+    </div>
 
-    <section class="panel" id="viewPanel">
-      <!-- rendered by renderView() -->
-    </section>
+    <div class="status-pill">
+      <span class="dot on"></span>
+      <span>Connected to GitHub</span>
+    </div>
 
-  </section>
+    <div class="nav-label">Faculties</div>
+    <div id="facultyNav"></div>
+    <div class="add-inline">
+      <input type="text" id="sidebarNewFaculty" placeholder="New faculty name">
+      <button onclick="addFaculty()" title="Add faculty">+</button>
+    </div>
 
-  <!-- Activity log — always visible, so connection errors are never hidden -->
-  <section class="panel">
-    <h2>Activity log</h2>
-    <div id="log"><div class="line info">Waiting to connect…</div></div>
-  </section>
+    <div class="sidebar-footer">
+      <div class="nav-item" onclick="goHome()">
+        <div class="left">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <span class="name">Overview</span>
+        </div>
+      </div>
+      <div class="nav-item" onclick="reloadData()">
+        <div class="left">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          <span class="name">Reload from GitHub</span>
+        </div>
+      </div>
+      <div class="nav-item" onclick="copyRawUrl()">
+        <div class="left">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span class="name">Copy data.json URL</span>
+        </div>
+      </div>
+      <div class="nav-item" onclick="disconnect()">
+        <div class="left">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span class="name">Disconnect</span>
+        </div>
+      </div>
+    </div>
+  </aside>
 
-</main>
+  <div class="main">
+    <div class="topbar">
+      <div class="breadcrumb" id="breadcrumb"></div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost btn-sm" onclick="reloadData()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Reload
+        </button>
+      </div>
+    </div>
+
+    <div class="content" id="content"><!-- rendered by renderView() --></div>
+
+    <div style="padding:0 30px 40px;">
+      <div class="log-panel">
+        <div class="log-head" onclick="toggleLog()">
+          <h3>Activity log</h3>
+          <svg id="logChevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="log-body" id="logBody"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-overlay" id="yearModal">
+  <div class="modal">
+    <h3>Add a year</h3>
+    <div class="field-group">
+      <label>Year</label>
+      <input type="text" id="modalYearInput" placeholder="e.g. 2024">
+    </div>
+    <div class="actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('yearModal')">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="submitYearModal()">Add year</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="subjectModal">
+  <div class="modal">
+    <h3>Add a subject</h3>
+    <div class="field-group">
+      <label>Subject name</label>
+      <input type="text" id="modalSubjectName" placeholder="e.g. Java Programming">
+    </div>
+    <div class="field-group">
+      <label>Subject code</label>
+      <input type="text" id="modalSubjectCode" placeholder="e.g. CS301">
+    </div>
+    <div class="actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('subjectModal')">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="submitSubjectModal()">Add subject</button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ---------------------------------------------------------------
-   Data model stored at /data.json in the repo:
+   Data model stored at /data.json in the repo root:
 
    {
      "faculties": [
@@ -317,7 +508,9 @@
                  "name": "Java Programming",
                  "code": "CS301",
                  "papers": [
-                   { "name": "Winter 2024 Regular", "url": "https://raw.githubusercontent.com/.../paper.pdf", "path": "papers/engineering/2024/CS301/winter-2024-regular-171234.pdf" }
+                   { "name": "Winter 2024 Regular",
+                     "url": "https://raw.githubusercontent.com/.../paper.pdf",
+                     "path": "papers/engineering/2024/CS301/winter-2024-regular-171234.pdf" }
                  ]
                }
              ]
@@ -327,76 +520,83 @@
      ]
    }
 
-   This mirrors the Faculty -> Year -> Subject -> Paper drill-down already
-   in the Flutter app (FacultyScreen -> YearScreen -> ... -> PaperScreen).
-   If your Subject/Paper Dart models use different field names than
-   name/code/papers/url, either rename them here or tell me the real
-   models and I'll match this file to them exactly.
+   This mirrors the Faculty -> Year -> Subject -> Paper drill-down in the
+   Flutter app (FacultyScreen -> YearScreen -> ... -> PaperScreen). If your
+   subject_model.dart / data_service.dart use different field names, tell
+   me and I'll line this up exactly.
 ------------------------------------------------------------------ */
 
 const state = {
-  owner: '', repo: '', branch: '', token: '',
-  data: null, dataSha: null,
-  view: 'faculties',
-  currentFaculty: null, currentYear: null, currentSubject: null,
+  owner:'', repo:'', branch:'', token:'',
+  data:null, dataSha:null,
+  currentFacultyId:null, currentYear:null, currentSubjectCode:null,
 };
 
-function log(msg, type='info'){
-  const el = document.getElementById('log');
-  const line = document.createElement('div');
-  line.className = 'line ' + type;
-  const t = new Date().toLocaleTimeString();
-  line.textContent = `[${t}] ${msg}`;
-  el.appendChild(line);
-  el.scrollTop = el.scrollHeight;
+// ---------- Toasts + log (both fire together, so nothing is ever hidden) ----------
+
+function toast(message, type='info'){
+  const box = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast ' + (type === 'ok' ? 'ok' : type === 'err' ? 'err' : '');
+  const icon = type === 'ok'
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+    : type === 'err'
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+  el.innerHTML = icon + `<span>${message}</span>`;
+  box.appendChild(el);
+  setTimeout(() => { el.style.opacity='0'; el.style.transition='opacity 0.25s'; setTimeout(()=>el.remove(), 250); }, type==='err' ? 6000 : 3200);
 }
+
+function log(message, type='info'){
+  const body = document.getElementById('logBody');
+  const line = document.createElement('div');
+  line.className = 'log-line ' + (type === 'ok' ? 'ok' : type === 'err' ? 'err' : '');
+  line.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+  body.appendChild(line);
+  body.scrollTop = body.scrollHeight;
+  if (type === 'err') toast(message, 'err');
+}
+
+function toggleLog(){
+  document.getElementById('logBody').classList.toggle('open');
+  document.getElementById('logChevron').style.transform =
+    document.getElementById('logBody').classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+}
+
+// ---------- Helpers ----------
 
 function slugify(s){
-  return (s || '').toString().trim().toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '') || 'item';
+  return (s || '').toString().trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') || 'item';
 }
-
-function utf8ToB64(str){
-  return btoa(unescape(encodeURIComponent(str)));
-}
-function b64ToUtf8(str){
-  return decodeURIComponent(escape(atob(str.replace(/\n/g, ''))));
-}
+function utf8ToB64(str){ return btoa(unescape(encodeURIComponent(str))); }
+function b64ToUtf8(str){ return decodeURIComponent(escape(atob(str.replace(/\n/g,'')))); }
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 async function gh(path, options = {}){
   const base = `https://api.github.com/repos/${state.owner}/${state.repo}`;
   const url = path ? `${base}/${path}` : base;
-
   let res;
   try{
     res = await fetch(url, {
       ...options,
-      headers: {
+      headers:{
         'Authorization': `token ${state.token}`,
-        'Accept': 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
+        'Accept':'application/vnd.github+json',
+        'X-GitHub-Api-Version':'2022-11-28',
         ...(options.headers || {})
       }
     });
   } catch(networkErr){
-    // fetch() itself throws on network failure / CORS block / offline — not an HTTP status
-    throw new Error(`Network error calling ${url} — ${networkErr.message}. Check your internet connection; if this keeps happening, your browser or network may be blocking api.github.com.`);
+    throw new Error(`Network error calling ${url} — ${networkErr.message}. Check your connection; your network or browser may be blocking api.github.com.`);
   }
-
   if (res.status === 404) return null;
-
   if (!res.ok){
     let detail = res.statusText;
-    try{
-      const body = await res.json();
-      detail = body.message || detail;
-    } catch(e){ /* response wasn't JSON — keep statusText */ }
-
+    try{ const body = await res.json(); detail = body.message || detail; }catch(e){}
     if (res.status === 401) detail = `Bad credentials — the token was rejected. ${detail}`;
-    if (res.status === 403) detail = `Forbidden — check the token's scopes (needs "repo"), or you've hit a rate limit. ${detail}`;
+    if (res.status === 403) detail = `Forbidden — check the token's scopes (needs "repo"), or a rate limit was hit. ${detail}`;
     if (res.status === 422) detail = `Unprocessable — ${detail}`;
-
     throw new Error(`GitHub API ${res.status}: ${detail}`);
   }
   return res.json();
@@ -405,328 +605,40 @@ async function gh(path, options = {}){
 async function getFile(path){
   const json = await gh(`contents/${path}?ref=${encodeURIComponent(state.branch)}`);
   if (!json) return null;
-  return { text: b64ToUtf8(json.content), sha: json.sha, download_url: json.download_url };
+  return { text:b64ToUtf8(json.content), sha:json.sha, download_url:json.download_url };
 }
-
 async function putFile(path, base64Content, message, sha){
   const body = { message, content: base64Content, branch: state.branch };
   if (sha) body.sha = sha;
-  return gh(`contents/${path}`, { method: 'PUT', body: JSON.stringify(body) });
+  return gh(`contents/${path}`, { method:'PUT', body: JSON.stringify(body) });
 }
-
 async function deleteFile(path, sha, message){
-  return gh(`contents/${path}`, {
-    method: 'DELETE',
-    body: JSON.stringify({ message, sha, branch: state.branch })
-  });
+  return gh(`contents/${path}`, { method:'DELETE', body: JSON.stringify({ message, sha, branch: state.branch }) });
 }
-
 async function saveData(message){
   const res = await putFile('data.json', utf8ToB64(JSON.stringify(state.data, null, 2)), message, state.dataSha);
   state.dataSha = res.content.sha;
 }
 
-// ---------- Connect ----------
-
-function setStamp(text, cls){
-  const stamp = document.getElementById('statusStamp');
-  stamp.textContent = text;
-  stamp.className = 'stamp' + (cls ? ' ' + cls : '');
+// PUT with real upload progress, via XHR (fetch can't report upload progress)
+function putFileWithProgress(path, base64Content, message, onProgress){
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', `https://api.github.com/repos/${state.owner}/${state.repo}/contents/${path}`);
+    xhr.setRequestHeader('Authorization', `token ${state.token}`);
+    xhr.setRequestHeader('Accept', 'application/vnd.github+json');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.upload.onprogress = (e) => { if (e.lengthComputable && onProgress) onProgress(Math.round((e.loaded / e.total) * 100)); };
+    xhr.onload = () => {
+      let body = {};
+      try{ body = JSON.parse(xhr.responseText); }catch(e){}
+      if (xhr.status >= 200 && xhr.status < 300) resolve(body);
+      else reject(new Error(`GitHub API ${xhr.status}: ${body.message || xhr.statusText}`));
+    };
+    xhr.onerror = () => reject(new Error('Network error during upload — check your connection.'));
+    xhr.send(JSON.stringify({ message, content: base64Content, branch: state.branch }));
+  });
 }
-
-function showConnectError(message){
-  const box = document.getElementById('connectError');
-  box.textContent = message;
-  box.style.display = 'block';
-}
-
-function clearConnectError(){
-  const box = document.getElementById('connectError');
-  box.style.display = 'none';
-  box.textContent = '';
-}
-
-async function attemptConnect(){
-  clearConnectError();
-
-  state.owner = document.getElementById('ownerInput').value.trim();
-  state.repo = document.getElementById('repoInput').value.trim();
-  state.branch = document.getElementById('branchInput').value.trim() || 'main';
-  state.token = document.getElementById('tokenInput').value.trim();
-
-  if (!state.owner || !state.repo){ showConnectError('Owner and repository name are required.'); return; }
-  if (!state.token){ showConnectError('Paste a personal access token first.'); return; }
-
-  const btn = document.getElementById('connectBtn');
-  btn.disabled = true; btn.textContent = 'Connecting…';
-  setStamp('connecting…', 'pending');
-  log(`Connecting to ${state.owner}/${state.repo}…`);
-
-  try{
-    const repoInfo = await gh(''); // confirms repo + token are valid
-    if (!repoInfo) throw new Error(`Repository ${state.owner}/${state.repo} was not found (404) — check the owner/repo names, or the token doesn't have access to it.`);
-    log(`Connected to ${state.owner}/${state.repo} (default branch: ${repoInfo.default_branch}).`, 'ok');
-
-    let existing;
-    try{
-      existing = await getFile('data.json');
-    } catch(readErr){
-      throw new Error(`Connected, but couldn't read data.json: ${readErr.message}`);
-    }
-
-    if (existing){
-      try{
-        state.data = JSON.parse(existing.text);
-      } catch(parseErr){
-        throw new Error(`data.json exists but isn't valid JSON: ${parseErr.message}`);
-      }
-      state.dataSha = existing.sha;
-      log('Loaded existing data.json.', 'ok');
-    } else {
-      state.data = { faculties: [] };
-      try{
-        await saveData('Initialize data.json');
-      } catch(writeErr){
-        throw new Error(`Connected, but couldn't create data.json: ${writeErr.message}`);
-      }
-      log('data.json did not exist — created a fresh one.', 'ok');
-    }
-
-    setStamp('connected', 'connected');
-    document.getElementById('repoLabel').textContent = `${state.owner}/${state.repo} · raw: data.json`;
-    document.getElementById('workArea').style.display = 'block';
-    renderView();
-  } catch(err){
-    setStamp('connection failed', null);
-    showConnectError(err.message);
-    log(err.message, 'err');
-  } finally {
-    btn.disabled = false; btn.textContent = 'Connect';
-  }
-}
-
-document.getElementById('connectBtn').addEventListener('click', attemptConnect);
-document.getElementById('tokenInput').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') attemptConnect();
-});
-
-// ---------- Navigation ----------
-
-function goTo(view, faculty=null, year=null, subject=null){
-  state.view = view;
-  state.currentFaculty = faculty;
-  state.currentYear = year;
-  state.currentSubject = subject;
-  renderView();
-}
-
-function renderBreadcrumb(){
-  const parts = [`<a onclick="goTo('faculties')">Faculties</a>`];
-  if (state.currentFaculty) parts.push(`<a onclick="goTo('years', state.currentFaculty)">${state.currentFaculty.name}</a>`);
-  if (state.currentYear) parts.push(`<a onclick="goTo('subjects', state.currentFaculty, state.currentYear)">${state.currentYear.year}</a>`);
-  if (state.currentSubject) parts.push(`${state.currentSubject.name}`);
-  document.getElementById('breadcrumb').innerHTML = parts.join(' &nbsp;/&nbsp; ');
-}
-
-function renderView(){
-  renderBreadcrumb();
-  const panel = document.getElementById('viewPanel');
-  if (state.view === 'faculties') return renderFaculties(panel);
-  if (state.view === 'years') return renderYears(panel);
-  if (state.view === 'subjects') return renderSubjects(panel);
-  if (state.view === 'papers') return renderPapers(panel);
-}
-
-// ---------- Faculties ----------
-
-function renderFaculties(panel){
-  const faculties = state.data.faculties;
-  panel.innerHTML = `
-    <h2>Faculties</h2>
-    <div class="tabs">
-      ${faculties.map(f => `
-        <div class="tab" onclick="goTo('years', ${JSON.stringify(f).replace(/"/g,'&quot;')})">
-          ${f.name}
-          <span class="count">${f.years.length} year${f.years.length===1?'':'s'}</span>
-          <button class="del" title="Delete faculty" onclick="event.stopPropagation(); deleteFaculty('${f.id}')">✕</button>
-        </div>
-      `).join('') || '<div class="empty">No faculties yet — add the first one below.</div>'}
-    </div>
-    <div class="inline-form">
-      <div>
-        <label>New faculty name</label>
-        <input type="text" id="newFacultyName" placeholder="e.g. Engineering">
-      </div>
-      <button onclick="addFaculty()">Add faculty</button>
-    </div>
-  `;
-}
-
-async function addFaculty(){
-  const name = document.getElementById('newFacultyName').value.trim();
-  if (!name) return;
-  const id = slugify(name);
-  if (state.data.faculties.some(f => f.id === id)){ log('A faculty with that name already exists.', 'err'); return; }
-  state.data.faculties.push({ id, name, years: [] });
-  try{
-    await saveData(`Add faculty: ${name}`);
-    log(`Added faculty "${name}".`, 'ok');
-    renderView();
-  } catch(err){ log(err.message, 'err'); }
-}
-
-async function deleteFaculty(id){
-  if (!confirm('Delete this faculty and all its years/subjects/papers from data.json? (uploaded PDFs are not removed)')) return;
-  state.data.faculties = state.data.faculties.filter(f => f.id !== id);
-  try{
-    await saveData(`Remove faculty: ${id}`);
-    log('Faculty removed.', 'ok');
-    renderView();
-  } catch(err){ log(err.message, 'err'); }
-}
-
-// ---------- Years ----------
-
-function renderYears(panel){
-  const f = state.data.faculties.find(x => x.id === state.currentFaculty.id);
-  state.currentFaculty = f;
-  panel.innerHTML = `
-    <h2>${f.name} — Years</h2>
-    <div class="tabs">
-      ${f.years.map(y => `
-        <div class="tab" onclick='goTo("subjects", ${JSON.stringify(f)}, ${JSON.stringify(y)})'>
-          ${y.year}
-          <span class="count">${y.subjects.length} subject${y.subjects.length===1?'':'s'}</span>
-          <button class="del" title="Delete year" onclick="event.stopPropagation(); deleteYear('${y.year}')">✕</button>
-        </div>
-      `).join('') || '<div class="empty">No years yet — add one below.</div>'}
-    </div>
-    <div class="inline-form">
-      <div>
-        <label>New year</label>
-        <input type="text" id="newYear" placeholder="e.g. 2024">
-      </div>
-      <button onclick="addYear()">Add year</button>
-    </div>
-  `;
-}
-
-async function addYear(){
-  const year = document.getElementById('newYear').value.trim();
-  if (!year) return;
-  const f = state.currentFaculty;
-  if (f.years.some(y => y.year === year)){ log('That year already exists for this faculty.', 'err'); return; }
-  f.years.push({ year, subjects: [] });
-  try{
-    await saveData(`Add year ${year} to ${f.name}`);
-    log(`Added year "${year}" under ${f.name}.`, 'ok');
-    renderView();
-  } catch(err){ log(err.message, 'err'); }
-}
-
-async function deleteYear(year){
-  if (!confirm('Delete this year and everything under it from data.json?')) return;
-  const f = state.currentFaculty;
-  f.years = f.years.filter(y => y.year !== year);
-  try{
-    await saveData(`Remove year ${year} from ${f.name}`);
-    log('Year removed.', 'ok');
-    renderView();
-  } catch(err){ log(err.message, 'err'); }
-}
-
-// ---------- Subjects ----------
-
-function renderSubjects(panel){
-  const f = state.currentFaculty;
-  const y = f.years.find(x => x.year === state.currentYear.year);
-  state.currentYear = y;
-  panel.innerHTML = `
-    <h2>${f.name} · ${y.year} — Subjects</h2>
-    <div class="tabs">
-      ${y.subjects.map(s => `
-        <div class="tab" onclick='goTo("papers", ${JSON.stringify(f)}, ${JSON.stringify(y)}, ${JSON.stringify(s)})'>
-          ${s.name} <span style="font-family:var(--mono); font-weight:400; color:var(--muted);">(${s.code})</span>
-          <span class="count">${s.papers.length} paper${s.papers.length===1?'':'s'}</span>
-          <button class="del" title="Delete subject" onclick="event.stopPropagation(); deleteSubject('${s.code}')">✕</button>
-        </div>
-      `).join('') || '<div class="empty">No subjects yet — add one below.</div>'}
-    </div>
-    <div class="inline-form">
-      <div>
-        <label>Subject name</label>
-        <input type="text" id="newSubjectName" placeholder="e.g. Java Programming">
-      </div>
-      <div>
-        <label>Subject code</label>
-        <input type="text" id="newSubjectCode" placeholder="e.g. CS301">
-      </div>
-      <button onclick="addSubject()">Add subject</button>
-    </div>
-  `;
-}
-
-async function addSubject(){
-  const name = document.getElementById('newSubjectName').value.trim();
-  const code = document.getElementById('newSubjectCode').value.trim();
-  if (!name || !code) return;
-  const y = state.currentYear;
-  if (y.subjects.some(s => s.code === code)){ log('That subject code already exists for this year.', 'err'); return; }
-  y.subjects.push({ name, code, papers: [] });
-  try{
-    await saveData(`Add subject ${code} to ${state.currentFaculty.name} ${y.year}`);
-    log(`Added subject "${name}" (${code}).`, 'ok');
-    renderView();
-  } catch(err){ log(err.message, 'err'); }
-}
-
-async function deleteSubject(code){
-  if (!confirm('Delete this subject and its papers from data.json?')) return;
-  const y = state.currentYear;
-  y.subjects = y.subjects.filter(s => s.code !== code);
-  try{
-    await saveData(`Remove subject ${code}`);
-    log('Subject removed.', 'ok');
-    renderView();
-  } catch(err){ log(err.message, 'err'); }
-}
-
-// ---------- Papers ----------
-
-function renderPapers(panel){
-  const f = state.currentFaculty, y = state.currentYear;
-  const s = y.subjects.find(x => x.code === state.currentSubject.code);
-  state.currentSubject = s;
-  panel.innerHTML = `
-    <h2>${f.name} · ${y.year} · ${s.name} (${s.code}) — Papers</h2>
-    ${s.papers.map((p, i) => `
-      <div class="paper-row">
-        <div>
-          <a href="${p.url}" target="_blank" rel="noopener">${p.name}</a>
-          <div class="meta">${p.path || p.url}</div>
-        </div>
-        <button class="danger" onclick="deletePaper(${i})">Delete</button>
-      </div>
-    `).join('') || '<div class="empty">No papers uploaded yet.</div>'}
-
-    <div class="panel" style="margin-top:16px; background:var(--card);">
-      <h2 style="font-size:15px;">Upload a paper</h2>
-      <div class="row">
-        <div>
-          <label>Paper name</label>
-          <input type="text" id="newPaperName" placeholder="e.g. Winter 2024 Regular">
-        </div>
-        <div>
-          <label>PDF file</label>
-          <input type="file" id="newPaperFile" accept="application/pdf">
-        </div>
-      </div>
-      <button id="uploadBtn" onclick="addPaper()">Upload &amp; add</button>
-      <div class="hint">Files are committed to <span style="font-family:var(--mono);">papers/${f.id}/${y.year}/${s.code}/…</span> in the repo. Large PDFs (roughly over 20–30&nbsp;MB) may fail through this API — split or compress those first.</div>
-    </div>
-  `;
-}
-
 function readFileAsBase64(file){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -736,38 +648,482 @@ function readFileAsBase64(file){
   });
 }
 
+// ---------- Connect ----------
+
+function showConnectError(message){
+  const box = document.getElementById('connectError');
+  box.textContent = message; box.style.display = 'block';
+}
+function clearConnectError(){
+  const box = document.getElementById('connectError');
+  box.style.display='none'; box.textContent='';
+}
+
+async function attemptConnect(){
+  clearConnectError();
+  state.owner = document.getElementById('ownerInput').value.trim();
+  state.repo = document.getElementById('repoInput').value.trim();
+  state.branch = document.getElementById('branchInput').value.trim() || 'main';
+  state.token = document.getElementById('tokenInput').value.trim();
+
+  if (!state.owner || !state.repo){ showConnectError('Owner and repository name are required.'); return; }
+  if (!state.token){ showConnectError('Paste a personal access token first.'); return; }
+
+  const btn = document.getElementById('connectBtn');
+  btn.disabled = true; btn.innerHTML = 'Connecting…';
+
+  try{
+    const repoInfo = await gh('');
+    if (!repoInfo) throw new Error(`Repository ${state.owner}/${state.repo} was not found (404) — check the names, or the token doesn't have access.`);
+    log(`Connected to ${state.owner}/${state.repo} (default branch: ${repoInfo.default_branch}).`, 'ok');
+
+    let existing;
+    try{ existing = await getFile('data.json'); }
+    catch(readErr){ throw new Error(`Connected, but couldn't read data.json: ${readErr.message}`); }
+
+    if (existing){
+      try{ state.data = JSON.parse(existing.text); }
+      catch(parseErr){ throw new Error(`data.json exists but isn't valid JSON: ${parseErr.message}`); }
+      state.dataSha = existing.sha;
+      log('Loaded existing data.json.', 'ok');
+    } else {
+      state.data = { faculties: [] };
+      try{ await saveData('Initialize data.json'); }
+      catch(writeErr){ throw new Error(`Connected, but couldn't create data.json: ${writeErr.message}`); }
+      log('data.json did not exist — created a fresh one.', 'ok');
+    }
+
+    document.getElementById('repoLabel').textContent = `${state.owner}/${state.repo}`;
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('appShell').style.display = 'flex';
+    toast('Connected to GitHub', 'ok');
+    goHome();
+  } catch(err){
+    showConnectError(err.message);
+    log(err.message, 'err');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18c-4.51 2-5-2-7-2"/><path d="M13 21v-3.5a2.5 2.5 0 0 0-.6-1.7c2.9-.3 6-1.5 6-6.4a4.7 4.7 0 0 0-1.3-3.2 4.4 4.4 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.2 12.2 0 0 0-6.4 0C4.7 3.1 3.6 3.4 3.6 3.4a4.4 4.4 0 0 0-.1 3.2A4.7 4.7 0 0 0 2.2 9.8c0 4.9 3 6.1 6 6.4a2.5 2.5 0 0 0-.6 1.7V21"/></svg> Connect to GitHub';
+  }
+}
+document.getElementById('connectBtn').addEventListener('click', attemptConnect);
+document.getElementById('tokenInput').addEventListener('keydown', e => { if (e.key === 'Enter') attemptConnect(); });
+
+function disconnect(){
+  if (!confirm('Disconnect? Your token will be cleared from memory.')) return;
+  state.token = '';
+  document.getElementById('appShell').style.display = 'none';
+  document.getElementById('authScreen').style.display = 'flex';
+}
+
+async function reloadData(){
+  try{
+    const existing = await getFile('data.json');
+    if (existing){
+      state.data = JSON.parse(existing.text);
+      state.dataSha = existing.sha;
+      log('Reloaded data.json from GitHub.', 'ok');
+      toast('Reloaded from GitHub', 'ok');
+      renderView();
+    }
+  } catch(err){ log(err.message, 'err'); }
+}
+
+function copyRawUrl(){
+  const url = `https://raw.githubusercontent.com/${state.owner}/${state.repo}/${state.branch}/data.json`;
+  navigator.clipboard?.writeText(url).then(
+    () => toast('Copied data.json URL to clipboard', 'ok'),
+    () => toast(url, 'info')
+  );
+}
+
+// ---------- Navigation ----------
+
+function goHome(){
+  state.currentFacultyId = null; state.currentYear = null; state.currentSubjectCode = null;
+  renderView();
+}
+function selectFaculty(id){
+  state.currentFacultyId = id; state.currentYear = null; state.currentSubjectCode = null;
+  renderView();
+}
+function selectYear(year){
+  state.currentYear = year; state.currentSubjectCode = null;
+  renderView();
+}
+function selectSubject(code){
+  state.currentSubjectCode = code;
+  renderView();
+}
+
+function getCurrentFaculty(){ return state.data.faculties.find(f => f.id === state.currentFacultyId) || null; }
+function getCurrentYearObj(){ const f = getCurrentFaculty(); return f ? f.years.find(y => y.year === state.currentYear) : null; }
+function getCurrentSubjectObj(){ const y = getCurrentYearObj(); return y ? y.subjects.find(s => s.code === state.currentSubjectCode) : null; }
+
+function totalYears(){ return state.data.faculties.reduce((n,f)=>n+f.years.length,0); }
+function totalSubjects(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.subjects.length,0),0); }
+function totalPapers(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.subjects.reduce((k,s)=>k+s.papers.length,0),0),0); }
+
+// ---------- Render: sidebar ----------
+
+function renderSidebarNav(){
+  const nav = document.getElementById('facultyNav');
+  nav.innerHTML = state.data.faculties.map(f => `
+    <div class="nav-item ${f.id === state.currentFacultyId ? 'active' : ''}" onclick="selectFaculty('${f.id}')">
+      <div class="left">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>
+        <span class="name">${escapeHtml(f.name)}</span>
+      </div>
+      <span class="count-badge">${f.years.length}</span>
+      <button class="del" title="Delete faculty" onclick="event.stopPropagation(); deleteFaculty('${f.id}')">✕</button>
+    </div>
+  `).join('') || `<div style="padding:10px; font-size:12.5px; color:#64748B;">No faculties yet.</div>`;
+}
+
+// ---------- Render: breadcrumb ----------
+
+function renderBreadcrumb(){
+  const f = getCurrentFaculty(), y = getCurrentYearObj(), s = getCurrentSubjectObj();
+  const parts = [`<span class="crumb ${!f?'current':''}" onclick="goHome()">Overview</span>`];
+  if (f){ parts.push('<span class="sep">/</span>'); parts.push(`<span class="crumb ${!y?'current':''}" onclick="selectFaculty('${f.id}')">${escapeHtml(f.name)}</span>`); }
+  if (y){ parts.push('<span class="sep">/</span>'); parts.push(`<span class="crumb ${!s?'current':''}" onclick="selectYear('${y.year}')">${escapeHtml(y.year)}</span>`); }
+  if (s){ parts.push('<span class="sep">/</span>'); parts.push(`<span class="crumb current">${escapeHtml(s.name)}</span>`); }
+  document.getElementById('breadcrumb').innerHTML = parts.join('');
+}
+
+function renderView(){
+  renderSidebarNav();
+  renderBreadcrumb();
+  const content = document.getElementById('content');
+  const f = getCurrentFaculty(), y = getCurrentYearObj(), s = getCurrentSubjectObj();
+  if (!f) return renderOverview(content);
+  if (!y) return renderYears(content, f);
+  if (!s) return renderSubjects(content, f, y);
+  return renderPapers(content, f, y, s);
+}
+
+// ---------- Overview ----------
+
+function renderOverview(content){
+  const f = state.data.faculties;
+  content.innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="top"><div class="stat-icon" style="background:var(--primary-container); color:var(--primary);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>
+        </div></div>
+        <div class="stat-value">${f.length}</div><div class="stat-label">Faculties</div>
+      </div>
+      <div class="stat-card">
+        <div class="top"><div class="stat-icon" style="background:#ECFDF5; color:var(--success);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div></div>
+        <div class="stat-value">${totalYears()}</div><div class="stat-label">Years</div>
+      </div>
+      <div class="stat-card">
+        <div class="top"><div class="stat-icon" style="background:#F0FDFA; color:var(--secondary);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div></div>
+        <div class="stat-value">${totalSubjects()}</div><div class="stat-label">Subjects</div>
+      </div>
+      <div class="stat-card">
+        <div class="top"><div class="stat-icon" style="background:#FEF2F2; color:var(--error);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div></div>
+        <div class="stat-value">${totalPapers()}</div><div class="stat-label">Papers</div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div><h2>Faculties</h2><div class="desc">Select one to manage its years, subjects and papers.</div></div>
+    </div>
+    <div class="card-grid">
+      ${f.map(fac => `
+        <div class="entity-card" onclick="selectFaculty('${fac.id}')">
+          <button class="del-x" onclick="event.stopPropagation(); deleteFaculty('${fac.id}')" title="Delete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg></div>
+          <h3>${escapeHtml(fac.name)}</h3>
+          <div class="meta">${fac.id}</div>
+          <div class="count">${fac.years.length} year${fac.years.length===1?'':'s'} · ${fac.years.reduce((n,y)=>n+y.subjects.length,0)} subjects</div>
+        </div>
+      `).join('')}
+      <div class="add-card" onclick="document.getElementById('sidebarNewFaculty').focus()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span>Add faculty</span>
+      </div>
+    </div>
+    ${f.length === 0 ? `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>
+        <div class="title">No faculties yet</div>
+        <div class="sub">Add your first faculty from the sidebar to get started.</div>
+      </div>` : ''}
+  `;
+}
+
+// ---------- Faculty CRUD ----------
+
+async function addFaculty(){
+  const input = document.getElementById('sidebarNewFaculty');
+  const name = input.value.trim();
+  if (!name) return;
+  const id = slugify(name);
+  if (state.data.faculties.some(fac => fac.id === id)){ toast('A faculty with that name already exists.', 'err'); return; }
+  state.data.faculties.push({ id, name, years: [] });
+  try{
+    await saveData(`Add faculty: ${name}`);
+    input.value = '';
+    log(`Added faculty "${name}".`, 'ok');
+    toast(`Added "${name}"`, 'ok');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+async function deleteFaculty(id){
+  const fac = state.data.faculties.find(f => f.id === id);
+  if (!confirm(`Delete "${fac.name}" and everything under it from data.json? (uploaded PDFs stay in the repo)`)) return;
+  state.data.faculties = state.data.faculties.filter(f => f.id !== id);
+  try{
+    await saveData(`Remove faculty: ${id}`);
+    log('Faculty removed.', 'ok');
+    toast('Faculty removed', 'ok');
+    if (state.currentFacultyId === id) goHome(); else renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+// ---------- Years ----------
+
+function renderYears(content, f){
+  content.innerHTML = `
+    <div class="section-head">
+      <div><h2>${escapeHtml(f.name)} — Years</h2><div class="desc">Choose a year to manage its subjects.</div></div>
+    </div>
+    <div class="chip-row">
+      ${f.years.map(y => `
+        <div class="chip ${y.year===state.currentYear?'active':''}" onclick="selectYear('${y.year}')">
+          ${escapeHtml(y.year)} <span style="opacity:0.75; font-weight:500;">${y.subjects.length}</span>
+          <span class="del" onclick="event.stopPropagation(); deleteYear('${y.year}')">✕</span>
+        </div>
+      `).join('')}
+      <button class="chip-add" onclick="openModal('yearModal')">+ Add year</button>
+    </div>
+    ${f.years.length===0 ? `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div class="title">No years yet</div>
+        <div class="sub">Add a year to start organising subjects under ${escapeHtml(f.name)}.</div>
+      </div>` : `<div class="empty-state"><div class="sub">Select a year above to view or add subjects.</div></div>`}
+  `;
+}
+
+let pendingModal = null;
+function openModal(id){
+  document.getElementById(id).classList.add('show');
+  const first = document.querySelector(`#${id} input`);
+  if (first){ first.value=''; setTimeout(()=>first.focus(), 50); }
+}
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+async function submitYearModal(){
+  const year = document.getElementById('modalYearInput').value.trim();
+  if (!year) return;
+  const f = getCurrentFaculty();
+  if (f.years.some(y => y.year === year)){ toast('That year already exists for this faculty.', 'err'); return; }
+  f.years.push({ year, subjects: [] });
+  try{
+    await saveData(`Add year ${year} to ${f.name}`);
+    log(`Added year "${year}" under ${f.name}.`, 'ok');
+    toast(`Added ${year}`, 'ok');
+    closeModal('yearModal');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+async function deleteYear(year){
+  if (!confirm(`Delete ${year} and everything under it from data.json?`)) return;
+  const f = getCurrentFaculty();
+  f.years = f.years.filter(y => y.year !== year);
+  try{
+    await saveData(`Remove year ${year} from ${f.name}`);
+    log('Year removed.', 'ok');
+    toast('Year removed', 'ok');
+    if (state.currentYear === year) state.currentYear = null;
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+// ---------- Subjects ----------
+
+function renderSubjects(content, f, y){
+  content.innerHTML = `
+    <div class="section-head">
+      <div><h2>${escapeHtml(f.name)} · ${escapeHtml(y.year)} — Subjects</h2><div class="desc">Choose a subject to upload or manage its papers.</div></div>
+    </div>
+    <div class="card-grid">
+      ${y.subjects.map(s => `
+        <div class="entity-card" onclick="selectSubject('${s.code}')">
+          <button class="del-x" onclick="event.stopPropagation(); deleteSubject('${s.code}')" title="Delete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <div class="icon-wrap" style="background:linear-gradient(135deg,#0D9488,#0F766E);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <h3>${escapeHtml(s.name)}</h3>
+          <div class="meta">${escapeHtml(s.code)}</div>
+          <div class="count">${s.papers.length} paper${s.papers.length===1?'':'s'}</div>
+        </div>
+      `).join('')}
+      <div class="add-card" onclick="openModal('subjectModal')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span>Add subject</span>
+      </div>
+    </div>
+    ${y.subjects.length===0 ? `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <div class="title">No subjects yet</div>
+        <div class="sub">Add one for ${escapeHtml(y.year)} to start uploading papers.</div>
+      </div>` : ''}
+  `;
+}
+
+async function submitSubjectModal(){
+  const name = document.getElementById('modalSubjectName').value.trim();
+  const code = document.getElementById('modalSubjectCode').value.trim();
+  if (!name || !code) return;
+  const y = getCurrentYearObj();
+  if (y.subjects.some(s => s.code === code)){ toast('That subject code already exists for this year.', 'err'); return; }
+  y.subjects.push({ name, code, papers: [] });
+  try{
+    await saveData(`Add subject ${code} to ${getCurrentFaculty().name} ${y.year}`);
+    log(`Added subject "${name}" (${code}).`, 'ok');
+    toast(`Added "${name}"`, 'ok');
+    closeModal('subjectModal');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+async function deleteSubject(code){
+  if (!confirm('Delete this subject and its papers from data.json?')) return;
+  const y = getCurrentYearObj();
+  y.subjects = y.subjects.filter(s => s.code !== code);
+  try{
+    await saveData(`Remove subject ${code}`);
+    log('Subject removed.', 'ok');
+    toast('Subject removed', 'ok');
+    if (state.currentSubjectCode === code) state.currentSubjectCode = null;
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+// ---------- Papers ----------
+
+let selectedFile = null;
+
+function renderPapers(content, f, y, s){
+  selectedFile = null;
+  content.innerHTML = `
+    <div class="upload-card">
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Upload a question paper
+      </h3>
+      <div class="field-group">
+        <label>Paper name</label>
+        <input type="text" id="newPaperName" placeholder="e.g. Winter 2024 Regular">
+      </div>
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="newPaperFile" accept="application/pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <div class="dz-title" id="dzTitle">Drag &amp; drop a PDF here, or click to browse</div>
+        <div class="dz-sub" id="dzSub">Only .pdf files are accepted</div>
+      </div>
+      <div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
+      <div style="margin-top:16px; display:flex; justify-content:flex-end;">
+        <button class="btn btn-primary" id="uploadBtn" onclick="addPaper()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload &amp; add
+        </button>
+      </div>
+      <div class="hint">Files commit to <span class="mono">papers/${f.id}/${y.year}/${s.code}/…</span>. Very large PDFs (roughly 20–30&nbsp;MB+) may fail through this API — compress or split those first.</div>
+    </div>
+
+    <div class="section-head">
+      <div><h2>${escapeHtml(s.name)} <span style="color:var(--text-secondary); font-weight:600;">(${escapeHtml(s.code)})</span></h2><div class="desc">${s.papers.length} paper${s.papers.length===1?'':'s'} uploaded</div></div>
+    </div>
+    <div id="papersList">
+      ${s.papers.map((p, i) => `
+        <div class="paper-row">
+          <div class="left">
+            <div class="pdf-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <div>
+              <a class="name" href="${p.url}" target="_blank" rel="noopener">${escapeHtml(p.name)}</a>
+              <div class="path">${escapeHtml(p.path || p.url)}</div>
+            </div>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="deletePaper(${i})">Delete</button>
+        </div>
+      `).join('') || `
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <div class="title">No papers uploaded yet</div>
+          <div class="sub">Use the form above to add the first one.</div>
+        </div>`}
+    </div>
+  `;
+  setupDropzone();
+}
+
+function setupDropzone(){
+  const dz = document.getElementById('dropzone');
+  const fileInput = document.getElementById('newPaperFile');
+  const setFile = (file) => {
+    if (!file) return;
+    if (file.type !== 'application/pdf'){ toast('Only PDF files are accepted.', 'err'); return; }
+    selectedFile = file;
+    dz.classList.add('has-file');
+    document.getElementById('dzTitle').textContent = file.name;
+    document.getElementById('dzSub').innerHTML = `${(file.size/1024/1024).toFixed(2)} MB — click to replace`;
+  };
+  fileInput.addEventListener('change', () => setFile(fileInput.files[0]));
+  ['dragenter','dragover'].forEach(evt => dz.addEventListener(evt, e => { e.preventDefault(); dz.classList.add('drag'); }));
+  ['dragleave','drop'].forEach(evt => dz.addEventListener(evt, e => { e.preventDefault(); dz.classList.remove('drag'); }));
+  dz.addEventListener('drop', e => { if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]); });
+}
+
 async function addPaper(){
   const name = document.getElementById('newPaperName').value.trim();
-  const fileInput = document.getElementById('newPaperFile');
-  const file = fileInput.files[0];
-  if (!name || !file){ log('Give the paper a name and choose a PDF file.', 'err'); return; }
+  if (!name){ toast('Give the paper a name first.', 'err'); return; }
+  if (!selectedFile){ toast('Choose a PDF file first.', 'err'); return; }
 
   const btn = document.getElementById('uploadBtn');
-  btn.disabled = true; btn.textContent = 'Uploading…';
+  const track = document.getElementById('progressTrack');
+  const fill = document.getElementById('progressFill');
+  btn.disabled = true; btn.innerHTML = 'Uploading…';
+  track.style.display = 'block'; fill.style.width = '0%';
 
-  const f = state.currentFaculty, y = state.currentYear, s = state.currentSubject;
+  const f = getCurrentFaculty(), y = getCurrentYearObj(), s = getCurrentSubjectObj();
   const path = `papers/${f.id}/${y.year}/${s.code}/${slugify(name)}-${Date.now()}.pdf`;
 
   try{
-    const base64 = await readFileAsBase64(file);
-    log(`Uploading ${file.name} (${(file.size/1024/1024).toFixed(2)} MB)…`);
-    const res = await putFile(path, base64, `Add paper: ${name} (${s.code} ${y.year})`, null);
+    const base64 = await readFileAsBase64(selectedFile);
+    log(`Uploading ${selectedFile.name} (${(selectedFile.size/1024/1024).toFixed(2)} MB)…`);
+    const res = await putFileWithProgress(path, base64, `Add paper: ${name} (${s.code} ${y.year})`, pct => { fill.style.width = pct + '%'; });
     s.papers.push({ name, url: res.content.download_url, path });
     await saveData(`Reference paper: ${name}`);
     log(`Uploaded and linked "${name}".`, 'ok');
+    toast(`Uploaded "${name}"`, 'ok');
     renderView();
   } catch(err){
     log(err.message, 'err');
   } finally {
-    btn.disabled = false; btn.textContent = 'Upload & add';
+    btn.disabled = false; btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload & add';
+    track.style.display = 'none';
   }
 }
 
 async function deletePaper(index){
-  if (!confirm('Remove this paper from the list? Optionally also delete the PDF file from the repo.')) return;
-  const s = state.currentSubject;
+  const s = getCurrentSubjectObj();
   const paper = s.papers[index];
-  const alsoDeleteFile = confirm('Also delete the underlying PDF file from the GitHub repo? (Cancel keeps the file, just removes the listing)');
+  if (!confirm(`Remove "${paper.name}" from the list?`)) return;
+  const alsoDeleteFile = confirm('Also delete the underlying PDF file from the GitHub repo? Cancel keeps the file, just removes the listing.');
   try{
     if (alsoDeleteFile && paper.path){
       const fileMeta = await gh(`contents/${paper.path}?ref=${encodeURIComponent(state.branch)}`);
@@ -776,6 +1132,7 @@ async function deletePaper(index){
     s.papers.splice(index, 1);
     await saveData(`Remove paper: ${paper.name}`);
     log('Paper removed.', 'ok');
+    toast('Paper removed', 'ok');
     renderView();
   } catch(err){ log(err.message, 'err'); }
 }
