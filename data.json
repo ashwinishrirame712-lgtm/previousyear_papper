@@ -3,17 +3,7 @@
     {
       "id": "mca",
       "name": "mca",
-      "years": [
-        {
-          "year": "2025",
-          "semesters": [
-            {
-              "semester": "sememter 1",
-              "subjects": []
-            }
-          ]
-        }
-      ]
+      "years": []
     }
   ]
 }
