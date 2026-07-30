@@ -9,7 +9,14 @@
           "semesters": [
             {
               "semester": "sememter 1",
-              "subjects": []
+              "subjects": [
+                {
+                  "id": "deploma-cs-2025-sememter-1-eng123",
+                  "name": "English",
+                  "code": "Eng123",
+                  "papers": []
+                }
+              ]
             }
           ]
         }
