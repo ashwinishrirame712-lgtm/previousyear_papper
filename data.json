@@ -3,7 +3,12 @@
     {
       "id": "mca",
       "name": "mca",
-      "years": []
+      "years": [
+        {
+          "year": "2025",
+          "semesters": []
+        }
+      ]
     }
   ]
 }
