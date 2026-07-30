@@ -25,7 +25,12 @@
     {
       "id": "mca",
       "name": "MCA",
-      "years": []
+      "years": [
+        {
+          "year": "2025",
+          "subjects": []
+        }
+      ]
     }
   ]
 }
