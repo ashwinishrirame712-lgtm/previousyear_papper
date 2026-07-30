@@ -9,7 +9,14 @@
           "semesters": [
             {
               "semester": "sememter 1",
-              "subjects": []
+              "subjects": [
+                {
+                  "id": "mca-2025-sememter-1-java25",
+                  "name": "java programming",
+                  "code": "JAVA25",
+                  "papers": []
+                }
+              ]
             }
           ]
         }
