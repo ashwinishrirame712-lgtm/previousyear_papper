@@ -1,3 +1,9 @@
 {
-  "faculties": []
+  "faculties": [
+    {
+      "id": "bca",
+      "name": "BCA",
+      "years": []
+    }
+  ]
 }
