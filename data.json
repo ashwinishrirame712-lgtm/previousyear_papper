@@ -6,7 +6,12 @@
       "years": [
         {
           "year": "2025",
-          "semesters": []
+          "semesters": [
+            {
+              "semester": "sememter 1",
+              "subjects": []
+            }
+          ]
         }
       ]
     }
