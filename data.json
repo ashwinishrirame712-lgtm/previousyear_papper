@@ -1,3 +1,9 @@
 {
-  "faculties": []
+  "faculties": [
+    {
+      "id": "deploma-cs",
+      "name": "Deploma CS",
+      "years": []
+    }
+  ]
 }
