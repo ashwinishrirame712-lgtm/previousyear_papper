@@ -14,7 +14,17 @@
                   "id": "deploma-cs-2025-sememter-1-eng123",
                   "name": "English",
                   "code": "Eng123",
-                  "papers": []
+                  "papers": [
+                    {
+                      "id": "deploma-cs-2025-sememter-1-eng123-english-2026-regular-1785413046216",
+                      "name": "English 2026 Regular",
+                      "year": "2025",
+                      "fileName": "english.pdf",
+                      "fileSize": "106 KB",
+                      "url": "https://raw.githubusercontent.com/ashwinishrirame712-lgtm/previousyear_papper/main/papers/deploma-cs/2025/sememter-1/Eng123/english-2026-regular-1785413046216.pdf",
+                      "path": "papers/deploma-cs/2025/sememter-1/Eng123/english-2026-regular-1785413046216.pdf"
+                    }
+                  ]
                 }
               ]
             }
