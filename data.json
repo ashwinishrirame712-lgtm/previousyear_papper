@@ -1,28 +1,6 @@
 {
   "faculties": [
     {
-      "id": "bca",
-      "name": "BCA",
-      "years": [
-        {
-          "year": "2025",
-          "subjects": [
-            {
-              "name": "Java Programming",
-              "code": "JAVA25",
-              "papers": [
-                {
-                  "name": "java programming pdf",
-                  "url": "https://raw.githubusercontent.com/ashwinishrirame712-lgtm/previousyear_papper/main/papers/bca/2025/JAVA25/java-programming-pdf-1785402937122.pdf",
-                  "path": "papers/bca/2025/JAVA25/java-programming-pdf-1785402937122.pdf"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "mca",
       "name": "MCA",
       "years": [
