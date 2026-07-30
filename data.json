@@ -9,24 +9,7 @@
           "semesters": [
             {
               "semester": "sememter 1",
-              "subjects": [
-                {
-                  "id": "mca-2025-sememter-1-java25",
-                  "name": "java programming",
-                  "code": "JAVA25",
-                  "papers": [
-                    {
-                      "id": "mca-2025-sememter-1-java25-winter-2025-1785409579274",
-                      "name": "winter 2025",
-                      "year": "2025",
-                      "fileName": "Object Oriented Programming through Java.pdf",
-                      "fileSize": "546 KB",
-                      "url": "https://raw.githubusercontent.com/ashwinishrirame712-lgtm/previousyear_papper/main/papers/mca/2025/sememter-1/JAVA25/winter-2025-1785409579274.pdf",
-                      "path": "papers/mca/2025/sememter-1/JAVA25/winter-2025-1785409579274.pdf"
-                    }
-                  ]
-                }
-              ]
+              "subjects": []
             }
           ]
         }
