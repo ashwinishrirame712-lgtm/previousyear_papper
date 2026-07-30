@@ -3,7 +3,12 @@
     {
       "id": "bca",
       "name": "BCA",
-      "years": []
+      "years": [
+        {
+          "year": "2025",
+          "subjects": []
+        }
+      ]
     }
   ]
 }
