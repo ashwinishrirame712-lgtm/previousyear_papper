@@ -1,18 +1,3 @@
 {
-  "faculties": [
-    {
-      "id": "mca",
-      "name": "MCA",
-      "years": [
-        {
-          "year": "2025",
-          "subjects": []
-        },
-        {
-          "year": "2026",
-          "subjects": []
-        }
-      ]
-    }
-  ]
+  "faculties": []
 }
