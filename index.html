@@ -69,6 +69,24 @@
     color:var(--ink);
     background:rgba(31,61,43,0.06);
   }
+  .stamp.pending{
+    border-color:var(--brass);
+    color:var(--brass);
+    background:rgba(168,121,26,0.07);
+    transform:rotate(0deg);
+  }
+  .error-box{
+    margin-top:14px;
+    padding:12px 14px;
+    border:1px solid var(--brick);
+    background:rgba(140,59,46,0.06);
+    border-radius:6px;
+    color:var(--brick);
+    font-size:13px;
+    font-family:var(--mono);
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
   main{
     max-width:980px;
     margin:0 auto;
@@ -260,6 +278,7 @@
       api.github.com. Reload the page and you'll need to paste it again. Use a classic token with the
       <strong>repo</strong> scope so it can read and write files in this repository.
     </div>
+    <div id="connectError" class="error-box" style="display:none;"></div>
   </section>
 
   <!-- Main working area, hidden until connected -->
@@ -271,11 +290,12 @@
       <!-- rendered by renderView() -->
     </section>
 
-    <section class="panel">
-      <h2>Activity log</h2>
-      <div id="log"><div class="line info">Ready.</div></div>
-    </section>
+  </section>
 
+  <!-- Activity log — always visible, so connection errors are never hidden -->
+  <section class="panel">
+    <h2>Activity log</h2>
+    <div id="log"><div class="line info">Waiting to connect…</div></div>
   </section>
 
 </main>
@@ -345,21 +365,39 @@ function b64ToUtf8(str){
 }
 
 async function gh(path, options = {}){
-  const url = `https://api.github.com/repos/${state.owner}/${state.repo}/${path}`;
-  const res = await fetch(url, {
-    ...options,
-    headers: {
-      'Authorization': `token ${state.token}`,
-      'Accept': 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      ...(options.headers || {})
-    }
-  });
+  const base = `https://api.github.com/repos/${state.owner}/${state.repo}`;
+  const url = path ? `${base}/${path}` : base;
+
+  let res;
+  try{
+    res = await fetch(url, {
+      ...options,
+      headers: {
+        'Authorization': `token ${state.token}`,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+        ...(options.headers || {})
+      }
+    });
+  } catch(networkErr){
+    // fetch() itself throws on network failure / CORS block / offline — not an HTTP status
+    throw new Error(`Network error calling ${url} — ${networkErr.message}. Check your internet connection; if this keeps happening, your browser or network may be blocking api.github.com.`);
+  }
+
   if (res.status === 404) return null;
+
   if (!res.ok){
-    let detail = '';
-    try{ detail = (await res.json()).message; }catch(e){}
-    throw new Error(`GitHub API ${res.status}: ${detail || res.statusText}`);
+    let detail = res.statusText;
+    try{
+      const body = await res.json();
+      detail = body.message || detail;
+    } catch(e){ /* response wasn't JSON — keep statusText */ }
+
+    if (res.status === 401) detail = `Bad credentials — the token was rejected. ${detail}`;
+    if (res.status === 403) detail = `Forbidden — check the token's scopes (needs "repo"), or you've hit a rate limit. ${detail}`;
+    if (res.status === 422) detail = `Unprocessable — ${detail}`;
+
+    throw new Error(`GitHub API ${res.status}: ${detail}`);
   }
   return res.json();
 }
@@ -390,41 +428,86 @@ async function saveData(message){
 
 // ---------- Connect ----------
 
-document.getElementById('connectBtn').addEventListener('click', async () => {
+function setStamp(text, cls){
+  const stamp = document.getElementById('statusStamp');
+  stamp.textContent = text;
+  stamp.className = 'stamp' + (cls ? ' ' + cls : '');
+}
+
+function showConnectError(message){
+  const box = document.getElementById('connectError');
+  box.textContent = message;
+  box.style.display = 'block';
+}
+
+function clearConnectError(){
+  const box = document.getElementById('connectError');
+  box.style.display = 'none';
+  box.textContent = '';
+}
+
+async function attemptConnect(){
+  clearConnectError();
+
   state.owner = document.getElementById('ownerInput').value.trim();
   state.repo = document.getElementById('repoInput').value.trim();
   state.branch = document.getElementById('branchInput').value.trim() || 'main';
   state.token = document.getElementById('tokenInput').value.trim();
 
-  if (!state.token){ log('Enter a personal access token first.', 'err'); return; }
+  if (!state.owner || !state.repo){ showConnectError('Owner and repository name are required.'); return; }
+  if (!state.token){ showConnectError('Paste a personal access token first.'); return; }
 
   const btn = document.getElementById('connectBtn');
   btn.disabled = true; btn.textContent = 'Connecting…';
-  try{
-    await gh(''); // confirms repo + token are valid
-    log(`Connected to ${state.owner}/${state.repo} (${state.branch}).`, 'ok');
+  setStamp('connecting…', 'pending');
+  log(`Connecting to ${state.owner}/${state.repo}…`);
 
-    const existing = await getFile('data.json');
+  try{
+    const repoInfo = await gh(''); // confirms repo + token are valid
+    if (!repoInfo) throw new Error(`Repository ${state.owner}/${state.repo} was not found (404) — check the owner/repo names, or the token doesn't have access to it.`);
+    log(`Connected to ${state.owner}/${state.repo} (default branch: ${repoInfo.default_branch}).`, 'ok');
+
+    let existing;
+    try{
+      existing = await getFile('data.json');
+    } catch(readErr){
+      throw new Error(`Connected, but couldn't read data.json: ${readErr.message}`);
+    }
+
     if (existing){
-      state.data = JSON.parse(existing.text);
+      try{
+        state.data = JSON.parse(existing.text);
+      } catch(parseErr){
+        throw new Error(`data.json exists but isn't valid JSON: ${parseErr.message}`);
+      }
       state.dataSha = existing.sha;
       log('Loaded existing data.json.', 'ok');
     } else {
       state.data = { faculties: [] };
-      await saveData('Initialize data.json');
+      try{
+        await saveData('Initialize data.json');
+      } catch(writeErr){
+        throw new Error(`Connected, but couldn't create data.json: ${writeErr.message}`);
+      }
       log('data.json did not exist — created a fresh one.', 'ok');
     }
 
-    document.getElementById('statusStamp').textContent = 'connected';
-    document.getElementById('statusStamp').classList.add('connected');
+    setStamp('connected', 'connected');
     document.getElementById('repoLabel').textContent = `${state.owner}/${state.repo} · raw: data.json`;
     document.getElementById('workArea').style.display = 'block';
     renderView();
   } catch(err){
+    setStamp('connection failed', null);
+    showConnectError(err.message);
     log(err.message, 'err');
   } finally {
     btn.disabled = false; btn.textContent = 'Connect';
   }
+}
+
+document.getElementById('connectBtn').addEventListener('click', attemptConnect);
+document.getElementById('tokenInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') attemptConnect();
 });
 
 // ---------- Navigation ----------
