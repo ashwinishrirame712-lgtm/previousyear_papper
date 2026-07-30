@@ -627,10 +627,10 @@ function getCurrentYearObj(){ const f = getCurrentFaculty(); return f ? f.years.
 function getCurrentSemesterObj(){ const y = getCurrentYearObj(); return y ? y.semesters.find(s => s.semester === state.currentSemester) : null; }
 function getCurrentSubjectObj(){ const sem = getCurrentSemesterObj(); return sem ? sem.subjects.find(s => s.code === state.currentSubjectCode) : null; }
 
-function totalYears(){ return state.data.faculties.reduce((n,f)=>n+f.years.length,0); }
-function totalSemesters(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.semesters.length,0),0); }
-function totalSubjects(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.semesters.reduce((k,sm)=>k+sm.subjects.length,0),0),0); }
-function totalPapers(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.semesters.reduce((k,sm)=>k+sm.subjects.reduce((j,s)=>j+s.papers.length,0),0),0),0); }
+function totalYears(){ return state.data.faculties.reduce((n,f)=>n+((f.years||[]).length),0); }
+function totalSemesters(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+((y.semesters||[]).length),0),0); }
+function totalSubjects(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.semesters.reduce((k,sm)=>k+((sm.subjects||[]).length),0),0),0); }
+function totalPapers(){ return state.data.faculties.reduce((n,f)=>n+f.years.reduce((m,y)=>m+y.semesters.reduce((k,sm)=>k+sm.subjects.reduce((j,s)=>j+((s.papers||[]).length),0),0),0),0); }
 
 // ---------- Render: sidebar ----------
 
@@ -642,7 +642,7 @@ function renderSidebarNav(){
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>
         <span class="name">${escapeHtml(f.name)}</span>
       </div>
-      <span class="count-badge">${f.years.length}</span>
+      <span class="count-badge">${(f.years||[]).length}</span>
       <button class="del" title="Delete faculty" onclick="event.stopPropagation(); deleteFaculty('${f.id}')">✕</button>
     </div>
   `).join('') || `<div style="padding:10px; font-size:12.5px; color:#64748B;">No faculties yet.</div>`;
@@ -739,13 +739,13 @@ function renderYears(content, f){
     <div class="chip-row">
       ${f.years.map(y => `
         <div class="chip ${y.year===state.currentYear?'active':''}" onclick="selectYear('${y.year}')">
-          ${escapeHtml(y.year)} <span style="opacity:0.75; font-weight:500;">${y.semesters.length}</span>
+          ${escapeHtml(y.year)} <span style="opacity:0.75; font-weight:500;">${(y.semesters||[]).length}</span>
           <span class="del" onclick="event.stopPropagation(); deleteYear('${y.year}')">✕</span>
         </div>
       `).join('')}
       <button class="chip-add" onclick="openModal('yearModal')">+ Add year</button>
     </div>
-    ${f.years.length===0 ? `
+    ${(f.years||[]).length===0 ? `
       <div class="empty-state">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         <div class="title">No years yet</div>
@@ -786,13 +786,13 @@ function renderSemesters(content, f, y){
     <div class="chip-row">
       ${y.semesters.map(sem => `
         <div class="chip ${sem.semester===state.currentSemester?'active':''}" onclick="selectSemester('${escapeHtml(sem.semester)}')">
-          ${escapeHtml(sem.semester)} <span style="opacity:0.75; font-weight:500;">${sem.subjects.length}</span>
+          ${escapeHtml(sem.semester)} <span style="opacity:0.75; font-weight:500;">${(sem.subjects||[]).length}</span>
           <span class="del" onclick="event.stopPropagation(); deleteSemester('${escapeHtml(sem.semester)}')">✕</span>
         </div>
       `).join('')}
       <button class="chip-add" onclick="openModal('semesterModal')">+ Add semester</button>
     </div>
-    ${y.semesters.length===0 ? `
+    ${(y.semesters||[]).length===0 ? `
       <div class="empty-state">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         <div class="title">No semesters yet</div>
@@ -834,7 +834,7 @@ function renderSubjects(content, f, y, sem){
           <div class="icon-wrap" style="background:linear-gradient(135deg,#0D9488,#0F766E);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
           <h3>${escapeHtml(s.name)}</h3>
           <div class="meta">${escapeHtml(s.code)}</div>
-          <div class="count">${s.papers.length} paper${s.papers.length===1?'':'s'}</div>
+          <div class="count">${(s.papers||[]).length} paper${((s.papers||[]).length===1)?'':'s'}</div>
         </div>
       `).join('')}
       <div class="add-card" onclick="openModal('subjectModal')">
@@ -842,7 +842,7 @@ function renderSubjects(content, f, y, sem){
         <span>Add subject</span>
       </div>
     </div>
-    ${sem.subjects.length===0 ? `
+    ${(sem.subjects||[]).length===0 ? `
       <div class="empty-state">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         <div class="title">No subjects yet</div>
@@ -901,7 +901,7 @@ function renderPapers(content, f, y, sem, s){
       <div class="hint">Files commit to <span class="mono">papers/${f.id}/${y.year}/${slugify(sem.semester)}/${s.code}/…</span>. Very large PDFs (roughly 20–30&nbsp;MB+) may fail through this API — compress or split those first.</div>
     </div>
 
-    <div class="section-head"><div><h2>${escapeHtml(s.name)} <span style="color:var(--text-secondary); font-weight:600;">(${escapeHtml(s.code)})</span></h2><div class="desc">${s.papers.length} paper${s.papers.length===1?'':'s'} uploaded</div></div></div>
+    <div class="section-head"><div><h2>${escapeHtml(s.name)} <span style="color:var(--text-secondary); font-weight:600;">(${escapeHtml(s.code)})</span></h2><div class="desc">${(s.papers||[]).length} paper${((s.papers||[]).length===1)?'':'s'} uploaded</div></div></div>
     <div id="papersList">
       ${s.papers.map((p, i) => `
         <div class="paper-row">
