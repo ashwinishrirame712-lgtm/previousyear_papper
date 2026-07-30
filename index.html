@@ -1,3 +1,701 @@
-<html>
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paper Archive — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F1ECDF;
+    --panel:#FFFFFF;
+    --card:#FBF8F1;
+    --ink:#1F3D2B;
+    --ink-soft:#3C5C46;
+    --brick:#8C3B2E;
+    --brick-soft:#B24E3D;
+    --brass:#A8791A;
+    --border:#D9CFB8;
+    --text:#24261F;
+    --muted:#6B6558;
+    --mono:'IBM Plex Mono', monospace;
+    --serif:'Source Serif 4', Georgia, serif;
+    --sans:'Inter', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    min-height:100vh;
+  }
+  header.top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 32px;
+    border-bottom:2px solid var(--ink);
+    background:var(--bg);
+  }
+  header.top h1{
+    font-family:var(--serif);
+    font-size:22px;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:0.2px;
+  }
+  header.top .sub{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .stamp{
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    border:2px solid var(--brick);
+    color:var(--brick);
+    padding:6px 12px;
+    border-radius:4px;
+    transform:rotate(-2deg);
+    background:rgba(140,59,46,0.05);
+  }
+  .stamp.connected{
+    border-color:var(--ink);
+    color:var(--ink);
+    background:rgba(31,61,43,0.06);
+  }
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:28px 24px 80px;
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:22px 24px;
+    margin-bottom:20px;
+  }
+  .panel h2{
+    font-family:var(--serif);
+    font-size:17px;
+    margin:0 0 14px;
+    color:var(--ink);
+  }
+  label{
+    display:block;
+    font-size:12px;
+    font-family:var(--mono);
+    color:var(--muted);
+    margin-bottom:5px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+  input[type=text], input[type=password], input[type=file]{
+    width:100%;
+    padding:9px 10px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    font-family:var(--sans);
+    font-size:14px;
+    background:#fff;
+    color:var(--text);
+  }
+  input:focus{outline:2px solid var(--brass); outline-offset:1px;}
+  .row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:12px;}
+  .row > div{flex:1; min-width:160px;}
+  button{
+    font-family:var(--sans);
+    font-weight:600;
+    font-size:13px;
+    padding:9px 16px;
+    border-radius:6px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:#fff;
+    cursor:pointer;
+  }
+  button:hover{background:var(--ink-soft);}
+  button.secondary{
+    background:transparent;
+    color:var(--ink);
+  }
+  button.secondary:hover{background:rgba(31,61,43,0.06);}
+  button.danger{
+    border-color:var(--brick);
+    background:transparent;
+    color:var(--brick);
+    padding:5px 10px;
+    font-size:12px;
+  }
+  button.danger:hover{background:rgba(140,59,46,0.08);}
+  button:disabled{opacity:0.45; cursor:not-allowed;}
+
+  .breadcrumb{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:16px;
+  }
+  .breadcrumb a{color:var(--ink); cursor:pointer; text-decoration:none; border-bottom:1px dotted var(--ink);}
+  .breadcrumb a:hover{color:var(--brick);}
+
+  .tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px;}
+  .tab{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-bottom:none;
+    border-radius:8px 8px 0 0;
+    padding:12px 18px 14px;
+    cursor:pointer;
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:14px;
+    color:var(--ink);
+    top:4px;
+  }
+  .tab:hover{top:0; box-shadow:0 -2px 0 var(--brass) inset;}
+  .tab .count{
+    display:block;
+    font-family:var(--mono);
+    font-weight:400;
+    font-size:11px;
+    color:var(--muted);
+    margin-top:3px;
+  }
+  .tab .del{
+    position:absolute; top:6px; right:6px;
+    font-size:11px; color:var(--muted); background:none; border:none; padding:2px 5px;
+  }
+  .tab .del:hover{color:var(--brick);}
+  .shelf{
+    border:1px solid var(--border);
+    border-radius:0 8px 8px 8px;
+    background:var(--card);
+    padding:18px;
+    margin-bottom:20px;
+  }
+  .empty{color:var(--muted); font-size:13px; font-style:italic;}
+
+  .paper-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    background:#fff;
+    margin-bottom:8px;
+  }
+  .paper-row a{color:var(--ink); font-weight:600; text-decoration:none;}
+  .paper-row a:hover{color:var(--brick);}
+  .paper-row .meta{font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:2px;}
+
+  #log{
+    font-family:var(--mono);
+    font-size:12px;
+    max-height:180px;
+    overflow-y:auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 14px;
+  }
+  #log .line{margin-bottom:4px;}
+  #log .ok{color:var(--ink);}
+  #log .err{color:var(--brick);}
+  #log .info{color:var(--muted);}
+
+  .hint{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.5;}
+  .inline-form{display:flex; gap:8px; flex-wrap:wrap; align-items:end; margin-top:10px;}
+  .inline-form > div{flex:1; min-width:140px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Paper Archive — Admin</h1>
+    <div class="sub" id="repoLabel">ashwinishrirame712-lgtm/previousyear_papper</div>
+  </div>
+  <div class="stamp" id="statusStamp">not connected</div>
+</header>
+
+<main>
+
+  <!-- Connect panel -->
+  <section class="panel" id="connectPanel">
+    <h2>Connect to GitHub</h2>
+    <div class="row">
+      <div>
+        <label>Owner</label>
+        <input type="text" id="ownerInput" value="ashwinishrirame712-lgtm">
+      </div>
+      <div>
+        <label>Repository</label>
+        <input type="text" id="repoInput" value="previousyear_papper">
+      </div>
+      <div>
+        <label>Branch</label>
+        <input type="text" id="branchInput" value="main">
+      </div>
+    </div>
+    <div class="row">
+      <div style="flex:2; min-width:260px;">
+        <label>Personal access token (classic, repo scope)</label>
+        <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+      </div>
+      <div style="flex:0 0 auto; align-self:end;">
+        <button id="connectBtn">Connect</button>
+      </div>
+    </div>
+    <div class="hint">
+      The token is kept in memory for this browser tab only — it is never saved to disk or sent anywhere except
+      api.github.com. Reload the page and you'll need to paste it again. Use a classic token with the
+      <strong>repo</strong> scope so it can read and write files in this repository.
+    </div>
+  </section>
+
+  <!-- Main working area, hidden until connected -->
+  <section id="workArea" style="display:none;">
+
+    <div class="breadcrumb" id="breadcrumb"></div>
+
+    <section class="panel" id="viewPanel">
+      <!-- rendered by renderView() -->
+    </section>
+
+    <section class="panel">
+      <h2>Activity log</h2>
+      <div id="log"><div class="line info">Ready.</div></div>
+    </section>
+
+  </section>
+
+</main>
+
+<script>
+/* ---------------------------------------------------------------
+   Data model stored at /data.json in the repo:
+
+   {
+     "faculties": [
+       {
+         "id": "engineering",
+         "name": "Engineering",
+         "years": [
+           {
+             "year": "2024",
+             "subjects": [
+               {
+                 "name": "Java Programming",
+                 "code": "CS301",
+                 "papers": [
+                   { "name": "Winter 2024 Regular", "url": "https://raw.githubusercontent.com/.../paper.pdf", "path": "papers/engineering/2024/CS301/winter-2024-regular-171234.pdf" }
+                 ]
+               }
+             ]
+           }
+         ]
+       }
+     ]
+   }
+
+   This mirrors the Faculty -> Year -> Subject -> Paper drill-down already
+   in the Flutter app (FacultyScreen -> YearScreen -> ... -> PaperScreen).
+   If your Subject/Paper Dart models use different field names than
+   name/code/papers/url, either rename them here or tell me the real
+   models and I'll match this file to them exactly.
+------------------------------------------------------------------ */
+
+const state = {
+  owner: '', repo: '', branch: '', token: '',
+  data: null, dataSha: null,
+  view: 'faculties',
+  currentFaculty: null, currentYear: null, currentSubject: null,
+};
+
+function log(msg, type='info'){
+  const el = document.getElementById('log');
+  const line = document.createElement('div');
+  line.className = 'line ' + type;
+  const t = new Date().toLocaleTimeString();
+  line.textContent = `[${t}] ${msg}`;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+}
+
+function slugify(s){
+  return (s || '').toString().trim().toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '') || 'item';
+}
+
+function utf8ToB64(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function b64ToUtf8(str){
+  return decodeURIComponent(escape(atob(str.replace(/\n/g, ''))));
+}
+
+async function gh(path, options = {}){
+  const url = `https://api.github.com/repos/${state.owner}/${state.repo}/${path}`;
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      'Authorization': `token ${state.token}`,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      ...(options.headers || {})
+    }
+  });
+  if (res.status === 404) return null;
+  if (!res.ok){
+    let detail = '';
+    try{ detail = (await res.json()).message; }catch(e){}
+    throw new Error(`GitHub API ${res.status}: ${detail || res.statusText}`);
+  }
+  return res.json();
+}
+
+async function getFile(path){
+  const json = await gh(`contents/${path}?ref=${encodeURIComponent(state.branch)}`);
+  if (!json) return null;
+  return { text: b64ToUtf8(json.content), sha: json.sha, download_url: json.download_url };
+}
+
+async function putFile(path, base64Content, message, sha){
+  const body = { message, content: base64Content, branch: state.branch };
+  if (sha) body.sha = sha;
+  return gh(`contents/${path}`, { method: 'PUT', body: JSON.stringify(body) });
+}
+
+async function deleteFile(path, sha, message){
+  return gh(`contents/${path}`, {
+    method: 'DELETE',
+    body: JSON.stringify({ message, sha, branch: state.branch })
+  });
+}
+
+async function saveData(message){
+  const res = await putFile('data.json', utf8ToB64(JSON.stringify(state.data, null, 2)), message, state.dataSha);
+  state.dataSha = res.content.sha;
+}
+
+// ---------- Connect ----------
+
+document.getElementById('connectBtn').addEventListener('click', async () => {
+  state.owner = document.getElementById('ownerInput').value.trim();
+  state.repo = document.getElementById('repoInput').value.trim();
+  state.branch = document.getElementById('branchInput').value.trim() || 'main';
+  state.token = document.getElementById('tokenInput').value.trim();
+
+  if (!state.token){ log('Enter a personal access token first.', 'err'); return; }
+
+  const btn = document.getElementById('connectBtn');
+  btn.disabled = true; btn.textContent = 'Connecting…';
+  try{
+    await gh(''); // confirms repo + token are valid
+    log(`Connected to ${state.owner}/${state.repo} (${state.branch}).`, 'ok');
+
+    const existing = await getFile('data.json');
+    if (existing){
+      state.data = JSON.parse(existing.text);
+      state.dataSha = existing.sha;
+      log('Loaded existing data.json.', 'ok');
+    } else {
+      state.data = { faculties: [] };
+      await saveData('Initialize data.json');
+      log('data.json did not exist — created a fresh one.', 'ok');
+    }
+
+    document.getElementById('statusStamp').textContent = 'connected';
+    document.getElementById('statusStamp').classList.add('connected');
+    document.getElementById('repoLabel').textContent = `${state.owner}/${state.repo} · raw: data.json`;
+    document.getElementById('workArea').style.display = 'block';
+    renderView();
+  } catch(err){
+    log(err.message, 'err');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Connect';
+  }
+});
+
+// ---------- Navigation ----------
+
+function goTo(view, faculty=null, year=null, subject=null){
+  state.view = view;
+  state.currentFaculty = faculty;
+  state.currentYear = year;
+  state.currentSubject = subject;
+  renderView();
+}
+
+function renderBreadcrumb(){
+  const parts = [`<a onclick="goTo('faculties')">Faculties</a>`];
+  if (state.currentFaculty) parts.push(`<a onclick="goTo('years', state.currentFaculty)">${state.currentFaculty.name}</a>`);
+  if (state.currentYear) parts.push(`<a onclick="goTo('subjects', state.currentFaculty, state.currentYear)">${state.currentYear.year}</a>`);
+  if (state.currentSubject) parts.push(`${state.currentSubject.name}`);
+  document.getElementById('breadcrumb').innerHTML = parts.join(' &nbsp;/&nbsp; ');
+}
+
+function renderView(){
+  renderBreadcrumb();
+  const panel = document.getElementById('viewPanel');
+  if (state.view === 'faculties') return renderFaculties(panel);
+  if (state.view === 'years') return renderYears(panel);
+  if (state.view === 'subjects') return renderSubjects(panel);
+  if (state.view === 'papers') return renderPapers(panel);
+}
+
+// ---------- Faculties ----------
+
+function renderFaculties(panel){
+  const faculties = state.data.faculties;
+  panel.innerHTML = `
+    <h2>Faculties</h2>
+    <div class="tabs">
+      ${faculties.map(f => `
+        <div class="tab" onclick="goTo('years', ${JSON.stringify(f).replace(/"/g,'&quot;')})">
+          ${f.name}
+          <span class="count">${f.years.length} year${f.years.length===1?'':'s'}</span>
+          <button class="del" title="Delete faculty" onclick="event.stopPropagation(); deleteFaculty('${f.id}')">✕</button>
+        </div>
+      `).join('') || '<div class="empty">No faculties yet — add the first one below.</div>'}
+    </div>
+    <div class="inline-form">
+      <div>
+        <label>New faculty name</label>
+        <input type="text" id="newFacultyName" placeholder="e.g. Engineering">
+      </div>
+      <button onclick="addFaculty()">Add faculty</button>
+    </div>
+  `;
+}
+
+async function addFaculty(){
+  const name = document.getElementById('newFacultyName').value.trim();
+  if (!name) return;
+  const id = slugify(name);
+  if (state.data.faculties.some(f => f.id === id)){ log('A faculty with that name already exists.', 'err'); return; }
+  state.data.faculties.push({ id, name, years: [] });
+  try{
+    await saveData(`Add faculty: ${name}`);
+    log(`Added faculty "${name}".`, 'ok');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+async function deleteFaculty(id){
+  if (!confirm('Delete this faculty and all its years/subjects/papers from data.json? (uploaded PDFs are not removed)')) return;
+  state.data.faculties = state.data.faculties.filter(f => f.id !== id);
+  try{
+    await saveData(`Remove faculty: ${id}`);
+    log('Faculty removed.', 'ok');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+// ---------- Years ----------
+
+function renderYears(panel){
+  const f = state.data.faculties.find(x => x.id === state.currentFaculty.id);
+  state.currentFaculty = f;
+  panel.innerHTML = `
+    <h2>${f.name} — Years</h2>
+    <div class="tabs">
+      ${f.years.map(y => `
+        <div class="tab" onclick='goTo("subjects", ${JSON.stringify(f)}, ${JSON.stringify(y)})'>
+          ${y.year}
+          <span class="count">${y.subjects.length} subject${y.subjects.length===1?'':'s'}</span>
+          <button class="del" title="Delete year" onclick="event.stopPropagation(); deleteYear('${y.year}')">✕</button>
+        </div>
+      `).join('') || '<div class="empty">No years yet — add one below.</div>'}
+    </div>
+    <div class="inline-form">
+      <div>
+        <label>New year</label>
+        <input type="text" id="newYear" placeholder="e.g. 2024">
+      </div>
+      <button onclick="addYear()">Add year</button>
+    </div>
+  `;
+}
+
+async function addYear(){
+  const year = document.getElementById('newYear').value.trim();
+  if (!year) return;
+  const f = state.currentFaculty;
+  if (f.years.some(y => y.year === year)){ log('That year already exists for this faculty.', 'err'); return; }
+  f.years.push({ year, subjects: [] });
+  try{
+    await saveData(`Add year ${year} to ${f.name}`);
+    log(`Added year "${year}" under ${f.name}.`, 'ok');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+async function deleteYear(year){
+  if (!confirm('Delete this year and everything under it from data.json?')) return;
+  const f = state.currentFaculty;
+  f.years = f.years.filter(y => y.year !== year);
+  try{
+    await saveData(`Remove year ${year} from ${f.name}`);
+    log('Year removed.', 'ok');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+// ---------- Subjects ----------
+
+function renderSubjects(panel){
+  const f = state.currentFaculty;
+  const y = f.years.find(x => x.year === state.currentYear.year);
+  state.currentYear = y;
+  panel.innerHTML = `
+    <h2>${f.name} · ${y.year} — Subjects</h2>
+    <div class="tabs">
+      ${y.subjects.map(s => `
+        <div class="tab" onclick='goTo("papers", ${JSON.stringify(f)}, ${JSON.stringify(y)}, ${JSON.stringify(s)})'>
+          ${s.name} <span style="font-family:var(--mono); font-weight:400; color:var(--muted);">(${s.code})</span>
+          <span class="count">${s.papers.length} paper${s.papers.length===1?'':'s'}</span>
+          <button class="del" title="Delete subject" onclick="event.stopPropagation(); deleteSubject('${s.code}')">✕</button>
+        </div>
+      `).join('') || '<div class="empty">No subjects yet — add one below.</div>'}
+    </div>
+    <div class="inline-form">
+      <div>
+        <label>Subject name</label>
+        <input type="text" id="newSubjectName" placeholder="e.g. Java Programming">
+      </div>
+      <div>
+        <label>Subject code</label>
+        <input type="text" id="newSubjectCode" placeholder="e.g. CS301">
+      </div>
+      <button onclick="addSubject()">Add subject</button>
+    </div>
+  `;
+}
+
+async function addSubject(){
+  const name = document.getElementById('newSubjectName').value.trim();
+  const code = document.getElementById('newSubjectCode').value.trim();
+  if (!name || !code) return;
+  const y = state.currentYear;
+  if (y.subjects.some(s => s.code === code)){ log('That subject code already exists for this year.', 'err'); return; }
+  y.subjects.push({ name, code, papers: [] });
+  try{
+    await saveData(`Add subject ${code} to ${state.currentFaculty.name} ${y.year}`);
+    log(`Added subject "${name}" (${code}).`, 'ok');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+async function deleteSubject(code){
+  if (!confirm('Delete this subject and its papers from data.json?')) return;
+  const y = state.currentYear;
+  y.subjects = y.subjects.filter(s => s.code !== code);
+  try{
+    await saveData(`Remove subject ${code}`);
+    log('Subject removed.', 'ok');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+
+// ---------- Papers ----------
+
+function renderPapers(panel){
+  const f = state.currentFaculty, y = state.currentYear;
+  const s = y.subjects.find(x => x.code === state.currentSubject.code);
+  state.currentSubject = s;
+  panel.innerHTML = `
+    <h2>${f.name} · ${y.year} · ${s.name} (${s.code}) — Papers</h2>
+    ${s.papers.map((p, i) => `
+      <div class="paper-row">
+        <div>
+          <a href="${p.url}" target="_blank" rel="noopener">${p.name}</a>
+          <div class="meta">${p.path || p.url}</div>
+        </div>
+        <button class="danger" onclick="deletePaper(${i})">Delete</button>
+      </div>
+    `).join('') || '<div class="empty">No papers uploaded yet.</div>'}
+
+    <div class="panel" style="margin-top:16px; background:var(--card);">
+      <h2 style="font-size:15px;">Upload a paper</h2>
+      <div class="row">
+        <div>
+          <label>Paper name</label>
+          <input type="text" id="newPaperName" placeholder="e.g. Winter 2024 Regular">
+        </div>
+        <div>
+          <label>PDF file</label>
+          <input type="file" id="newPaperFile" accept="application/pdf">
+        </div>
+      </div>
+      <button id="uploadBtn" onclick="addPaper()">Upload &amp; add</button>
+      <div class="hint">Files are committed to <span style="font-family:var(--mono);">papers/${f.id}/${y.year}/${s.code}/…</span> in the repo. Large PDFs (roughly over 20–30&nbsp;MB) may fail through this API — split or compress those first.</div>
+    </div>
+  `;
+}
+
+function readFileAsBase64(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = () => reject(new Error('Could not read the selected file.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function addPaper(){
+  const name = document.getElementById('newPaperName').value.trim();
+  const fileInput = document.getElementById('newPaperFile');
+  const file = fileInput.files[0];
+  if (!name || !file){ log('Give the paper a name and choose a PDF file.', 'err'); return; }
+
+  const btn = document.getElementById('uploadBtn');
+  btn.disabled = true; btn.textContent = 'Uploading…';
+
+  const f = state.currentFaculty, y = state.currentYear, s = state.currentSubject;
+  const path = `papers/${f.id}/${y.year}/${s.code}/${slugify(name)}-${Date.now()}.pdf`;
+
+  try{
+    const base64 = await readFileAsBase64(file);
+    log(`Uploading ${file.name} (${(file.size/1024/1024).toFixed(2)} MB)…`);
+    const res = await putFile(path, base64, `Add paper: ${name} (${s.code} ${y.year})`, null);
+    s.papers.push({ name, url: res.content.download_url, path });
+    await saveData(`Reference paper: ${name}`);
+    log(`Uploaded and linked "${name}".`, 'ok');
+    renderView();
+  } catch(err){
+    log(err.message, 'err');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Upload & add';
+  }
+}
+
+async function deletePaper(index){
+  if (!confirm('Remove this paper from the list? Optionally also delete the PDF file from the repo.')) return;
+  const s = state.currentSubject;
+  const paper = s.papers[index];
+  const alsoDeleteFile = confirm('Also delete the underlying PDF file from the GitHub repo? (Cancel keeps the file, just removes the listing)');
+  try{
+    if (alsoDeleteFile && paper.path){
+      const fileMeta = await gh(`contents/${paper.path}?ref=${encodeURIComponent(state.branch)}`);
+      if (fileMeta) await deleteFile(paper.path, fileMeta.sha, `Delete paper file: ${paper.name}`);
+    }
+    s.papers.splice(index, 1);
+    await saveData(`Remove paper: ${paper.name}`);
+    log('Paper removed.', 'ok');
+    renderView();
+  } catch(err){ log(err.message, 'err'); }
+}
+</script>
+</body>
 </html>
