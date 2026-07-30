@@ -1,9 +1,3 @@
 {
-  "faculties": [
-    {
-      "id": "mca",
-      "name": "mca",
-      "years": []
-    }
-  ]
+  "faculties": []
 }
