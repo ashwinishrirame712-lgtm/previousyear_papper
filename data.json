@@ -6,7 +6,13 @@
       "years": [
         {
           "year": "2025",
-          "subjects": []
+          "subjects": [
+            {
+              "name": "Java Programming",
+              "code": "JAVA25",
+              "papers": []
+            }
+          ]
         }
       ]
     }
