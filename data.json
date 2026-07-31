@@ -30,7 +30,17 @@
                   "id": "deploma-cs-2025-sememter-1-phy23",
                   "name": "physic",
                   "code": "phy23",
-                  "papers": []
+                  "papers": [
+                    {
+                      "id": "deploma-cs-2025-sememter-1-phy23-physic-1785496565504",
+                      "name": "physic",
+                      "year": "2025",
+                      "fileName": "physical-1785495653895.pdf",
+                      "fileSize": "106 KB",
+                      "url": "https://raw.githubusercontent.com/ashwinishrirame712-lgtm/previousyear_papper/main/papers/deploma-cs/2025/sememter-1/phy23/physic-1785496565504.pdf",
+                      "path": "papers/deploma-cs/2025/sememter-1/phy23/physic-1785496565504.pdf"
+                    }
+                  ]
                 }
               ]
             }
