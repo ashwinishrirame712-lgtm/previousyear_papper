@@ -25,6 +25,12 @@
                       "path": "papers/deploma-cs/2025/sememter-1/Eng123/english-2026-regular-1785413046216.pdf"
                     }
                   ]
+                },
+                {
+                  "id": "deploma-cs-2025-sememter-1-phy23",
+                  "name": "physic",
+                  "code": "phy23",
+                  "papers": []
                 }
               ]
             }
