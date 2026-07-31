@@ -41,6 +41,12 @@
                       "path": "papers/deploma-cs/2025/sememter-1/phy23/physic-1785496565504.pdf"
                     }
                   ]
+                },
+                {
+                  "id": "deploma-cs-2025-sememter-1-che12",
+                  "name": "Chemistry",
+                  "code": "che12",
+                  "papers": []
                 }
               ]
             }
